@@ -27,7 +27,6 @@ box()
     PADDING_PB=0
     PADDING_PL=0
     
-
     # Define the icons to use to draw the box
     EDGE_TL="${ICON_TL}"
     EDGE_T="${ICON_FH}"
@@ -37,8 +36,6 @@ box()
     EDGE_B="${ICON_FH}"
     EDGE_BL="${ICON_BL}"
     EDGE_L="${ICON_FV}"
-
-    
 
     # Create an array of text lines 
     # and find the longest line in it.
