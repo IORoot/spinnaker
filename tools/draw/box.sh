@@ -7,8 +7,13 @@ repeat_character(){
     for (( i = 0; i < $1; ++i )); do echo -n "$2"; done
 }
 
-
-title_box()
+# Create a box with various qualities.
+# - Font colour
+# - Background colour
+# - border colour
+# - border style
+# - padding X,Y,Top,Right,Bottom,Left
+box()
 {   
 
     CLASSES=$1
@@ -22,6 +27,18 @@ title_box()
     PADDING_PB=0
     PADDING_PL=0
     
+
+    # Define the icons to use to draw the box
+    EDGE_TL="${ICON_TL}"
+    EDGE_T="${ICON_FH}"
+    EDGE_TR="${ICON_TR}"
+    EDGE_R="${ICON_FV}"
+    EDGE_BR="${ICON_BR}"
+    EDGE_B="${ICON_FH}"
+    EDGE_BL="${ICON_BL}"
+    EDGE_L="${ICON_FV}"
+
+
     # class list to be parsed.
     # loop through each class name and create a CLASS variable
     # set inter-field separator (IFS) to a space and loop
@@ -42,6 +59,22 @@ title_box()
             declare PADDING_$PARAMETER=${!CLASS}
         fi 
         
+        if [[ $PARAMETER == EDGE* ]] && [[ $SECONDARY == "" ]] ; then
+            varname="${PARAMETER}_${PRIMARY}_TL"; declare EDGE_TL=${!varname}
+            varname="${PARAMETER}_${PRIMARY}_T";  declare EDGE_T=${!varname}
+            varname="${PARAMETER}_${PRIMARY}_TR"; declare EDGE_TR=${!varname}
+            varname="${PARAMETER}_${PRIMARY}_R";  declare EDGE_R=${!varname}
+            varname="${PARAMETER}_${PRIMARY}_BR"; declare EDGE_BR=${!varname}
+            varname="${PARAMETER}_${PRIMARY}_B";  declare EDGE_B=${!varname}
+            varname="${PARAMETER}_${PRIMARY}_BL"; declare EDGE_BL=${!varname}
+            varname="${PARAMETER}_${PRIMARY}_L";  declare EDGE_L=${!varname}
+        fi 
+
+        if [[ $PARAMETER == EDGE* ]] && ! [[ $SECONDARY == "" ]] ; then
+            varname="${CLASS}"
+            declare EDGE_${SECONDARY}=${!varname}
+        fi
+
         # Echo out variable name
         # VARIABLENAME=COLOUR_$PARAMETER
         # printf "${!VARIABLENAME} $VARIABLENAME\n"
@@ -70,16 +103,10 @@ title_box()
     STRING_LENGTH=${#TEXT_STRING}
     WIDTH=$(( ($PADDING_PL) + ($PADDING_PX) + ${STRING_LENGTH} + ($PADDING_PX) + ($PADDING_PR) ))
 
-    # Define the icons to use to draw the box
-    ICON_CORNER_TL="${ICON_TL}"
-    ICON_CORNER_TR="${ICON_TR}"
-    ICON_CORNER_BR="${ICON_BR}"
-    ICON_CORNER_BL="${ICON_BL}"
-    ICON_HORIZONTAL="${ICON_FH}"
-    ICON_VERTICAL="${ICON_FV}"
 
     # Create the horizontal top and bottom bar
-    HORIZONTAL_BAR=$(repeat_character ${WIDTH} ${ICON_HORIZONTAL})
+    EDGE_T=$(repeat_character ${WIDTH} ${EDGE_T})
+    EDGE_B=$(repeat_character ${WIDTH} ${EDGE_B})
 
     # Create the horizontal padding
     PR_PADDING=$(repeat_character $PADDING_PR " ")
@@ -90,7 +117,7 @@ title_box()
     VERTICAL_PADDING=$(repeat_character ${WIDTH} " ")
 
     # Create the vertical spacer padding line
-    VERTICAL_PADDING_LINE="${ICON_VERTICAL}${VERTICAL_PADDING}${ICON_VERTICAL}\n"
+    VERTICAL_PADDING_LINE="${EDGE_L}${VERTICAL_PADDING}${EDGE_R}\n"
     
 
 
@@ -113,17 +140,17 @@ title_box()
 
 
 
-
-
-
     # Create the output box
     BOX=""
 
+    # Set background colour
+    BOX="${BOX}${COLOUR_BG}"
+
     # Top line
     BOX="${BOX}${COLOUR_BORDER}"
-    BOX="${BOX}${ICON_CORNER_TL}"
-    BOX="${BOX}${HORIZONTAL_BAR}"
-    BOX="${BOX}${ICON_CORNER_TR}"
+    BOX="${BOX}${EDGE_TL}"
+    BOX="${BOX}${EDGE_T}"
+    BOX="${BOX}${EDGE_TR}"
     BOX="${BOX}\n"
 
     # Vertical padding lines
@@ -131,15 +158,16 @@ title_box()
     BOX="${BOX}${PY_LINE}"
 
     # Text Line
-    BOX="${BOX}${ICON_VERTICAL}"
+    BOX="${BOX}${EDGE_L}"
     BOX="${BOX}${PX_PADDING}"
     BOX="${BOX}${PL_PADDING}"
-    BOX="${BOX}${COLOUR_TEXT}"
-    BOX="${BOX}${TEXT_STRING}"
+        BOX="${BOX}${COLOUR_TEXT}"
+        BOX="${BOX}${TEXT_STRING}"
+        BOX="${BOX}${RESET_TEXT}"
     BOX="${BOX}${COLOUR_BORDER}"
     BOX="${BOX}${PR_PADDING}"
     BOX="${BOX}${PX_PADDING}"
-    BOX="${BOX}${ICON_VERTICAL}"
+    BOX="${BOX}${EDGE_R}"
     BOX="${BOX}\n"
 
     # Vertical padding lines
@@ -147,14 +175,27 @@ title_box()
     BOX="${BOX}${PB_LINE}"
 
     # Bottom line
-    BOX="${BOX}${ICON_CORNER_BL}"
-    BOX="${BOX}${HORIZONTAL_BAR}"
-    BOX="${BOX}${ICON_CORNER_BR}"
+    BOX="${BOX}${EDGE_BL}"
+    BOX="${BOX}${EDGE_B}"
+    BOX="${BOX}${EDGE_BR}"
+
+    # Reset background colour
+    BOX="${BOX}${RESET_ALL}"
 
     # Print the output box
     printf "${BOX}\n"
 
 }
 
+if [ "$#" -eq 1 ]; then
+    box "" "$@"
+    exit 1
+fi
 
-title_box "$@"
+if [ "$#" -ne 2 ]; then
+    printf "${TEXT_RED_500}Illegal number of parameters\n"
+    printf "${TEXT_GREEN_500}usage: ${TEXT_GRAY_200}$0 ${TEXT_SKY_500}[\"classes\"] \"String\"\n"
+    exit 1
+fi
+
+box "$@"

@@ -6,3 +6,4 @@
 . ./icons.sh
 . ./spacing.sh
 . ./padding.sh
+. ./edges.sh

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-text_variations() {
+text_styling() {
 
     export TEXT_DIM='\e[2m'
     export TEXT_DIM_OFF='\e[22m'
@@ -18,8 +18,8 @@ text_variations() {
     export TEXT_STRIKED_OFF='\e[29m'
 
 }
+text_styling
 
-# run function
-text_variations
+
 
 printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Styling : \t${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"
