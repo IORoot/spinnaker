@@ -44,11 +44,21 @@ box()
 
     # Find the longest line
     LONGEST_LINE=0
-    for LINE in "${ARRAY_OF_LINES[@]}"; do
+    LENGTH_OF_CURRENT_LINE=0
+    ICON_PADDING=0
+    for CURRENT_LINE in "${ARRAY_OF_LINES[@]}"; do
+
+        LENGTH_OF_CURRENT_LINE=${#CURRENT_LINE}
+
+        if [[ $CURRENT_LINE = *[![:ascii:]]* ]]; then
+            ICON_PADDING=1
+            LENGTH_OF_CURRENT_LINE=$(( $LENGTH_OF_CURRENT_LINE + $ICON_PADDING ))
+        fi
+
 
         # If the length of line is biggest, set.
-        if [ ${#LINE} -gt $LONGEST_LINE ]; then
-            LONGEST_LINE=${#LINE}
+        if [ $LENGTH_OF_CURRENT_LINE -gt $LONGEST_LINE ]; then
+            LONGEST_LINE=$LENGTH_OF_CURRENT_LINE
         fi
 
     done
@@ -115,7 +125,7 @@ box()
 
     # Figure out lengths and add the padding x2 (on each side)
     STRING_LENGTH=${#TEXT_STRING}
-    WIDTH=$(( ($PADDING_PL) + ($PADDING_PX) + ${LONGEST_LINE} + ($PADDING_PX) + ($PADDING_PR) ))
+    WIDTH=$(( $PADDING_PL + $PADDING_PX + ${LONGEST_LINE} + $PADDING_PX + $PADDING_PR ))
 
 
     # Create the horizontal top and bottom bar
@@ -166,8 +176,9 @@ box()
 
         # Extra line padding
         LINE_LENGTH=${#LINE}
-        EXTRA_PR_LENGTH=$(( $LONGEST_LINE - $LINE_LENGTH ))
+        EXTRA_PR_LENGTH=$(( $LONGEST_LINE - $LINE_LENGTH - $ICON_PADDING ))
         EXTRA_PR=$(repeat_character $EXTRA_PR_LENGTH " ")
+
 
         # printf "$LINE\n"
         TEXT_LINE="${TEXT_LINE}${COLOUR_BG}"
@@ -186,15 +197,6 @@ box()
         TEXT_LINE="${TEXT_LINE}\n"
         
     done
-
-    # printf "${TEXT_LINE}"
-
-
-
-
-
-
-
 
 
     # Create the output box
