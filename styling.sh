@@ -20,6 +20,4 @@ text_styling() {
 }
 text_styling
 
-
-
 printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Styling : \t${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"

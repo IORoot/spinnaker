@@ -38,6 +38,22 @@ box()
     EDGE_BL="${ICON_BL}"
     EDGE_L="${ICON_FV}"
 
+    
+
+    # Create an array of text lines 
+    # and find the longest line in it.
+    IFS='\n' read -ra ARRAY_OF_LINES <<< "$TEXT_STRING"
+
+    # Find the longest line
+    LONGEST_LINE=0
+    for LINE in "${ARRAY_OF_LINES[@]}"; do
+        if [ ${#LINE} -gt $LONGEST_LINE ]; then
+            LONGEST_LINE=${#LINE}
+        fi
+    done
+    # echo $LONGEST_LINE
+
+
 
     # class list to be parsed.
     # loop through each class name and create a CLASS variable
@@ -101,7 +117,7 @@ box()
 
     # Figure out lengths and add the padding x2 (on each side)
     STRING_LENGTH=${#TEXT_STRING}
-    WIDTH=$(( ($PADDING_PL) + ($PADDING_PX) + ${STRING_LENGTH} + ($PADDING_PX) + ($PADDING_PR) ))
+    WIDTH=$(( ($PADDING_PL) + ($PADDING_PX) + ${LONGEST_LINE} + ($PADDING_PX) + ($PADDING_PR) ))
 
 
     # Create the horizontal top and bottom bar
@@ -117,7 +133,7 @@ box()
     VERTICAL_PADDING=$(repeat_character ${WIDTH} " ")
 
     # Create the vertical spacer padding line
-    VERTICAL_PADDING_LINE="${EDGE_L}${VERTICAL_PADDING}${EDGE_R}\n"
+    VERTICAL_PADDING_LINE="${COLOUR_BG}${EDGE_L}${VERTICAL_PADDING}${EDGE_R}${RESET_BG}\n"
     
 
 
@@ -140,6 +156,49 @@ box()
 
 
 
+
+
+    # Generate the string arrays
+    TEXT_LINE=""
+
+    # Loop through Array to add extra padding
+    for LINE in "${ARRAY_OF_LINES[@]}"; do
+
+        if [[ -z $LINE ]]; then continue; fi
+
+        # Extra line padding
+        LINE_LENGTH=${#LINE}
+        EXTRA_PR_LENGTH=$(( $LONGEST_LINE - $LINE_LENGTH ))
+        EXTRA_PR=$(repeat_character $EXTRA_PR_LENGTH " ")
+
+        # printf "$LINE\n"
+        TEXT_LINE="${TEXT_LINE}${COLOUR_BG}"
+        TEXT_LINE="${TEXT_LINE}${EDGE_L}"
+        TEXT_LINE="${TEXT_LINE}${PX_PADDING}"
+        TEXT_LINE="${TEXT_LINE}${PL_PADDING}"
+            TEXT_LINE="${TEXT_LINE}${COLOUR_TEXT}"
+            TEXT_LINE="${TEXT_LINE}${LINE}"
+            TEXT_LINE="${TEXT_LINE}${EXTRA_PR}"
+            TEXT_LINE="${TEXT_LINE}${RESET_TEXT}"
+        TEXT_LINE="${TEXT_LINE}${COLOUR_BORDER}"
+        TEXT_LINE="${TEXT_LINE}${PR_PADDING}"
+        TEXT_LINE="${TEXT_LINE}${PX_PADDING}"
+        TEXT_LINE="${TEXT_LINE}${EDGE_R}"
+        TEXT_LINE="${TEXT_LINE}${RESET_BG}"
+        TEXT_LINE="${TEXT_LINE}\n"
+        
+    done
+
+    # printf "${TEXT_LINE}"
+
+
+
+
+
+
+
+
+
     # Create the output box
     BOX=""
 
@@ -158,26 +217,18 @@ box()
     BOX="${BOX}${PY_LINE}"
 
     # Text Line
-    BOX="${BOX}${EDGE_L}"
-    BOX="${BOX}${PX_PADDING}"
-    BOX="${BOX}${PL_PADDING}"
-        BOX="${BOX}${COLOUR_TEXT}"
-        BOX="${BOX}${TEXT_STRING}"
-        BOX="${BOX}${RESET_TEXT}"
-    BOX="${BOX}${COLOUR_BORDER}"
-    BOX="${BOX}${PR_PADDING}"
-    BOX="${BOX}${PX_PADDING}"
-    BOX="${BOX}${EDGE_R}"
-    BOX="${BOX}\n"
+    BOX="${BOX}${TEXT_LINE}"
 
     # Vertical padding lines
     BOX="${BOX}${PY_LINE}"
     BOX="${BOX}${PB_LINE}"
 
     # Bottom line
+    BOX="${BOX}${COLOUR_BG}"
     BOX="${BOX}${EDGE_BL}"
     BOX="${BOX}${EDGE_B}"
     BOX="${BOX}${EDGE_BR}"
+    BOX="${BOX}${RESET_BG}"
 
     # Reset background colour
     BOX="${BOX}${RESET_ALL}"

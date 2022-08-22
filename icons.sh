@@ -359,10 +359,4 @@ define_icon ICON_DOTS_700 2804
 define_icon ICON_DOTS_800 2802
 define_icon ICON_DOTS_900 2801
 
-# ┌────────────────────────────────────┐
-# │                                    │
-# │               Aegean               │
-# │                                    │
-# └────────────────────────────────────┘
-
 printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Icons : \t${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"

@@ -12,11 +12,6 @@
 #
 define_edge(){
 
-    if [ "$#" -ne 9 ]; then
-        printf "Invalid number of arguments.\n"
-        exit 0
-    fi
-
     NAME=$1
 
     export declare "${NAME}_TL"=$2
