@@ -16,8 +16,8 @@ printf "\n"
 # │                                     │
 # └─────────────────────────────────────┘
 
-# printf "\n${PINK}Block Elements:${RESET}\n\n"
-# ./unicodeTable.sh 2580 32
+printf "\n${PINK}Block Elements:${RESET}\n\n"
+./unicodeTable.sh 2580 32
 
 # printf "\n${PINK}Symbols for Legacy Computing:${RESET}\n\n"
 # ./unicodeTable.sh 1FB70 40
@@ -40,8 +40,8 @@ printf "\n"
 # │                                     │
 # └─────────────────────────────────────┘
 
-printf "\n${PINK}Braille:${RESET}\n\n"
-./unicodeTable.sh 2800 256
+# printf "\n${PINK}Braille:${RESET}\n\n"
+# ./unicodeTable.sh 2800 256
 
 # printf "\n${PINK}Duployan:${RESET}\n\n"
 # ./unicodeTable.sh 1BC00 144

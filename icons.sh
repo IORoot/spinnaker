@@ -359,4 +359,96 @@ define_icon ICON_DOTS_700 2804
 define_icon ICON_DOTS_800 2802
 define_icon ICON_DOTS_900 2801
 
+# ┌────────────────────────────────────┐
+# │                                    │
+# │               EMOJI                │
+# │                                    │
+# └────────────────────────────────────┘
+
+
+
+# ⯅ ⯈ ⯆ ⯇ 
+define_icon ICON_CHEVRON_U  2BC5
+define_icon ICON_CHEVRON_R  2BC8
+define_icon ICON_CHEVRON_D  2BC6
+define_icon ICON_CHEVRON_L  2BC7
+
+# ↑ ↗ → ↘ ↓ ↙ ← ↖ ↔ ↕
+define_icon ICON_ARROW_N   2BC7
+define_icon ICON_ARROW_NE  2197
+define_icon ICON_ARROW_E   2192
+define_icon ICON_ARROW_SE  2198
+define_icon ICON_ARROW_S   2193
+define_icon ICON_ARROW_SW  2199
+define_icon ICON_ARROW_W   2190
+define_icon ICON_ARROW_NW  2196
+define_icon ICON_ARROW_EW  2194
+define_icon ICON_ARROW_NS  2195
+
+# ⏰ ⏱ ⏲ ⏳ 🧭 🧲
+define_icon ICON_CLOCK      23F0
+define_icon ICON_WATCH      23F1
+define_icon ICON_TIMER      23F2
+define_icon ICON_EGGTIMER   23F3
+define_icon ICON_COMPASS    1F9ED
+define_icon ICON_MAGNET     1F9F2
+
+# ⛔ ✋ ✊ ❌ ❗ ❓ 🏁 🚫 🚦 🚧 🚨
+define_icon ICON_STOP   26D4
+define_icon ICON_HALT   270A
+define_icon ICON_HOLD   270B
+define_icon ICON_CROSS  274C
+define_icon ICON_ALERT  2757
+define_icon ICON_QUERY  2753
+define_icon ICON_END    1F3C1
+define_icon ICON_BAN    1F6AB
+define_icon ICON_LAMPS  1F6A6
+define_icon ICON_LIMIT  1F6A7
+define_icon ICON_SIREN  1F6A8
+
+# ✅ ❎ 🏳 🥇 🥈 🥉 ⬛ ⬜
+define_icon ICON_TICK   2705
+define_icon ICON_CHECK  274E
+define_icon ICON_GO     1F3F3
+define_icon ICON_1ST    1F947
+define_icon ICON_2ND    1F948
+define_icon ICON_3RD    1F949
+define_icon ICON_CUBE   2B1B
+define_icon ICON_BOX    2B1C
+
+# 😀 😂 😎 😈 😡 😢 🤖 🥳
+define_icon ICON_SMILE  1F600
+define_icon ICON_TEARS  1F602
+define_icon ICON_COOL   1F60E
+define_icon ICON_EVIL   1F608
+define_icon ICON_ANGER  1F621
+define_icon ICON_CRY    1F622
+define_icon ICON_BOT    1F916
+define_icon ICON_PARTY  1F973
+
+# 🌞 🌙 ⭐ ✨
+define_icon ICON_SUN    1F31E
+define_icon ICON_MOON   1F319
+define_icon ICON_STAR   2B50 
+define_icon ICON_STARS  2728 
+
+# 🌄 🎚 🎛 🎧 🎨 🛠 🛡
+define_icon ICON_PIC    1F304
+define_icon ICON_FADER   1F39A
+define_icon ICON_DIALS   1F39B
+define_icon ICON_CANS    1F3A7
+define_icon ICON_PAINT   1F3A8
+define_icon ICON_TOOLS   1F6E0
+define_icon ICON_SHIELD  1F6E1
+
+# 🏠 🏝 🏢 
+define_icon ICON_HOUSE   1F3E0
+define_icon ICON_BEACH   1F3DD
+define_icon ICON_WORK    1F3E2
+
+# 🚀 🛟 🛸 
+define_icon ICON_ROCKET  1F680
+define_icon ICON_LIFE    1F6DF
+define_icon ICON_SAUCER  1F6F8
+
 printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Icons : \t${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"

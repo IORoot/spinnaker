@@ -41,14 +41,17 @@ box()
     # and find the longest line in it.
     IFS='\n' read -ra ARRAY_OF_LINES <<< "$TEXT_STRING"
 
+
     # Find the longest line
     LONGEST_LINE=0
     for LINE in "${ARRAY_OF_LINES[@]}"; do
+
+        # If the length of line is biggest, set.
         if [ ${#LINE} -gt $LONGEST_LINE ]; then
             LONGEST_LINE=${#LINE}
         fi
+
     done
-    # echo $LONGEST_LINE
 
 
 
@@ -88,9 +91,7 @@ box()
             declare EDGE_${SECONDARY}=${!varname}
         fi
 
-        # Echo out variable name
-        # VARIABLENAME=COLOUR_$PARAMETER
-        # printf "${!VARIABLENAME} $VARIABLENAME\n"
+        # VARIABLENAME=COLOUR_$PARAMETER && printf "${!VARIABLENAME} $VARIABLENAME\n"
     done
 
 
@@ -155,7 +156,7 @@ box()
 
 
 
-    # Generate the string arrays
+    # Generate a text-line for each line in array
     TEXT_LINE=""
 
     # Loop through Array to add extra padding
