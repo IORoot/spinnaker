@@ -37,9 +37,13 @@ box()
     EDGE_BL="${ICON_BL}"
     EDGE_L="${ICON_FV}"
 
+
     # Create an array of text lines 
     # and find the longest line in it.
-    IFS='\n' read -ra ARRAY_OF_LINES <<< "$TEXT_STRING"
+    # echo "TEXT_STRING: $TEXT_STRING"
+    TEXT_STRING=${TEXT_STRING//'\n'/$'yyyy'}
+    IFS=$'yyyy' read -r -a ARRAY_OF_LINES <<< "$TEXT_STRING"
+
 
 
     # Find the longest line
@@ -55,11 +59,15 @@ box()
             LENGTH_OF_CURRENT_LINE=$(( $LENGTH_OF_CURRENT_LINE + $ICON_PADDING ))
         fi
 
+        # Count number of times an emoji in the line
+
 
         # If the length of line is biggest, set.
         if [ $LENGTH_OF_CURRENT_LINE -gt $LONGEST_LINE ]; then
             LONGEST_LINE=$LENGTH_OF_CURRENT_LINE
         fi
+
+        # echo $LENGTH_OF_CURRENT_LINE
 
     done
 
