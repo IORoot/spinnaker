@@ -93,6 +93,24 @@ for CLASS in $CLASSES; do
         VAR="${CLASS}"; export declare "${PREFIX}_${CLASS}"=${!VAR}
     fi
 
+    # ╭──────────────────────────╮
+    # │                          │
+    # │         → WIDTHS         │
+    # │         ↑ HEIGHTS        │
+    # │                          │
+    # ╰──────────────────────────╯
+    # create new variable W_, etc...
+    if  [[ $PARAMETER == 'W' ]]; then
+        export declare "${PREFIX}_${PARAMETER}"=${!CLASS}
+    fi    
+    
+    if  [[ $PARAMETER == 'H' ]]; then
+        export declare "${PREFIX}_${PARAMETER}"=${!CLASS}
+    fi
+
+
+
+
 
     # Example way to print out a variable
     # DYNAMIC_VARIABLE_NAME="${PREFIX}_${CLASS}"

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Import functions to use
+. ../utils/line_count.sh
 . ../utils/longest_text_line.sh
 . ../utils/repeat_characters.sh
 
@@ -58,9 +59,18 @@ box()
     declare "${PREFIX}_EDGE_BL"="${ICON_BL}"; local TMP_EDGE_BL="${PREFIX}_EDGE_BL"
     declare "${PREFIX}_EDGE_L"="${ICON_FV}"; local TMP_EDGE_L="${PREFIX}_EDGE_L"
 
+    # Width & Height
+    declare "${PREFIX}_W"=""; local TMP_W="${PREFIX}_W"
+    declare "${PREFIX}_H"=""; local TMP_H="${PREFIX}_H"
+
+    # Multi-height Vertical Lines
     declare MULTI_PY_LINES=""
     declare MULTI_PT_LINES=""
     declare MULTI_PB_LINES=""
+
+    # Number of Text Lines
+    declare LINE_COUNT=$(line_count "${TEXT_STRING}")
+    # echo "LINE_COUNT:$LINE_COUNT"
     
     # OVERRIDES
     #
@@ -394,6 +404,14 @@ vertical_padding()
     # printf "TMP_VERTICAL_LINE: ${!TMP_VERTICAL_LINE}\n"
 
 
+    # Override with HEIGHT setting
+    # Removing the number of lines too.
+    #
+    # echo "LINE_COUNT:$LINE_COUNT"
+    if ! [ -z ${BOX_H} ]; then
+        BOX_PY=$(( (${BOX_H} / 2) - $LINE_COUNT ))
+    fi
+
     # PY-PADDING LINES (Top and Bottom)
     #
     # Generate the vertical padding lines
@@ -428,6 +446,7 @@ vertical_padding()
         MULTI_PB_LINES="$MULTI_PB_LINES\n"
     fi
     # printf "\nMULTI_PB_LINES:\n$MULTI_PB_LINES"
+    
 
 }
 

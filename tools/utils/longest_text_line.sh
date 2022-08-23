@@ -52,6 +52,11 @@ longest_line_length(){
         # printf "length: $LENGTH_OF_CURRENT_LINE line: $CURRENT_LINE\n"
     done
 
+    # Override with Width if set.
+    if ! [ -z $BOX_W ]; then
+        LONGEST_LINE_LENGTH=$(( $BOX_W - 3 ))
+    fi
+
     echo $LONGEST_LINE_LENGTH
 
 }
