@@ -361,11 +361,9 @@ define_icon ICON_DOTS_900 2801
 
 # ┌────────────────────────────────────┐
 # │                                    │
-# │               EMOJI                │
+# │               ARROWS               │
 # │                                    │
 # └────────────────────────────────────┘
-
-
 
 # ⯅ ⯈ ⯆ ⯇ 
 define_icon ICON_CHEVRON_U  2BC5
@@ -384,6 +382,36 @@ define_icon ICON_ARROW_W   2190
 define_icon ICON_ARROW_NW  2196
 define_icon ICON_ARROW_EW  2194
 define_icon ICON_ARROW_NS  2195
+
+# ┌────────────────────────────────────┐
+# │                                    │
+# │               SHAPES               │
+# │                                    │
+# └────────────────────────────────────┘
+
+# ⬤ ⬥ ⬦ ○ ◌ ◎ ◉ ●
+define_icon ICON_ROUND     2B24
+define_icon ICON_FILLED    2B25
+define_icon ICON_HOLLOW    2B26
+define_icon ICON_HOOP      2B58
+define_icon ICON_DOTHOOP   25CC
+define_icon ICON_TARGET    25CE
+define_icon ICON_TUBE      25C9
+define_icon ICON_CIRCLE    25CF
+
+# ◤ ◥ ◢ ◣
+define_icon ICON_TRI_TL    25CF
+define_icon ICON_TRI_TR    25CF
+define_icon ICON_TRI_BR    25CF
+define_icon ICON_TRI_BL    25CF
+
+
+
+# ┌────────────────────────────────────┐
+# │                                    │
+# │               EMOJI                │
+# │                                    │
+# └────────────────────────────────────┘
 
 # ⏰ ⏱ ⏲ ⏳ 🧭 🧲
 define_icon ICON_CLOCK      23F0

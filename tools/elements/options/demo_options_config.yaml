@@ -1,0 +1,18 @@
+---
+title: "Example title"
+style: ""
+items:
+    - alpha:
+        title: "alpha"
+        title_style: "BG_RED_900"
+        description: "this is the description"
+        description_style: ""
+        command: "whereis bash" 
+        box_stlye: ""
+    - beta:
+        title: "beta"
+        title_style: "BG_RED_900"
+        description: "this is the description"
+        description_style: ""
+        command: "whereis bash" 
+        box_stlye: ""

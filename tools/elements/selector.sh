@@ -1,8 +1,0 @@
-#!/bin/bash
-
-selector(){
-
-
-}
-
-selector

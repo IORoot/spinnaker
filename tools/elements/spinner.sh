@@ -17,6 +17,7 @@ default_spinner()
 
 bump_spinner()
 {
+
     while true; do 
         for X in "${ICON_BUMP_100}" "${ICON_BUMP_200}" "${ICON_BUMP_300}" "${ICON_BUMP_400}" "${ICON_BUMP_700}" "${ICON_BUMP_800}"; do 
             printf "\b$X"; 
@@ -56,4 +57,5 @@ fade_spinner()
     done 
 }
 
-bump_spinner
+printf "${1}"
+fade_spinner
