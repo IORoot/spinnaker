@@ -90,7 +90,7 @@ for CLASS in $CLASSES; do
     # If it DOES have $SECONDARY set, it'll be something like "EDGE_WIDE_B"
     # Define the variable name to equal the class with a prefix. "BOX_EDGE_FINE_TL"
     if [[ $PARAMETER == EDGE* ]] && ! [[ $SECONDARY == "" ]] ; then
-        VAR="${CLASS}"; export declare "${PREFIX}_${CLASS}"=${!VAR}
+        VAR="${CLASS}"; export declare "${PREFIX}_${PARAMETER}_${SECONDARY}"=${!VAR}
     fi
 
     # ╭──────────────────────────╮

@@ -4,7 +4,8 @@
 . ../utils/line_count.sh
 . ../utils/longest_text_line.sh
 . ../utils/repeat_characters.sh
-
+. ../spacing/define_widths.sh
+. ../spacing/define_heights.sh
 
 # Create a box
 #
@@ -90,7 +91,6 @@ box()
     # @return INT
     declare "${PREFIX}_LONGEST_LINE_LENGTH"=$(longest_line_length "${TEXT_STRING}")
     local TMP_LONGEST_LINE_LENGTH="${PREFIX}_LONGEST_LINE_LENGTH"
-
 
     # WIDTH
     #
@@ -200,6 +200,8 @@ create_box()
     printf "${BOX}\n"
 
 }
+
+
 
 
 # CREATE PADDED TEXT-LINES
@@ -450,7 +452,8 @@ vertical_padding()
 
 }
 
-
+define_heights
+define_widths
 
 if [ "$#" -eq 1 ]; then
     box "" "$@"

@@ -53,6 +53,7 @@ longest_line_length(){
     done
 
     # Override with Width if set.
+
     if ! [ -z $BOX_W ]; then
         LONGEST_LINE_LENGTH=$(( $BOX_W - 3 ))
     fi
