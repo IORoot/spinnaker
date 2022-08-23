@@ -129,12 +129,13 @@ box()
     # @return $TEXT_LINES
     text_lines "${TEXT_STRING}"
 
-
+    # CREATE THE BOX
+    #
+    # Put the whole thing together.
     create_box
 
-
-    varname="${PREFIX}_LONGEST_LINE_LENGTH"
-    printf "\nLONGEST_LINE=${!varname} \n"
+    # complete
+    exit 0
 
 }
 
@@ -189,6 +190,7 @@ create_box()
     printf "${BOX}\n"
 
 }
+
 
 # CREATE PADDED TEXT-LINES
 #

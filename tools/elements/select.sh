@@ -2,7 +2,7 @@
 
 selectbox(){
 
-    BOX=$(./box.sh "TEXT_BLUE_400 BORDER_BLUE_700 PX_1 PY_1"  "textbox here 123")
+    BOX=$(./box.sh "TEXT_BLUE_400"  "Example box")
 
     printf "$BOX"
 
