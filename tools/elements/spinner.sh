@@ -55,3 +55,5 @@ fade_spinner()
         done; 
     done 
 }
+
+bump_spinner

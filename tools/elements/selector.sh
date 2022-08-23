@@ -1,0 +1,8 @@
+#!/bin/bash
+
+selector(){
+
+
+}
+
+selector
