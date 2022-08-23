@@ -27,9 +27,9 @@
 # Name to prefix all variable names with
 PREFIX=$1
 
+
 # String of class names
 CLASSES=$2
-
 # set inter-field separator (IFS) to a space and loop
 # through each class name and create a CLASS variable
 # The class will be something like "TEXT_GREEN_100"
@@ -93,10 +93,13 @@ for CLASS in $CLASSES; do
         VAR="${CLASS}"; export declare "${PREFIX}_${CLASS}"=${!VAR}
     fi
 
+
     # Example way to print out a variable
-    # DYNAMIC_VARIABLE_NAME="${PREFIX}_${PARAMETER}_COLOUR"
     # DYNAMIC_VARIABLE_NAME="${PREFIX}_${CLASS}"
-    # printf "VALUE: ${!DYNAMIC_VARIABLE_NAME} test text \n"
+    # printf "${DYNAMIC_VARIABLE_NAME} VALUE: ${!DYNAMIC_VARIABLE_NAME} \n"
+    # DYNAMIC_VARIABLE_NAME="${PREFIX}_${PARAMETER}_COLOUR"
+    # printf "${DYNAMIC_VARIABLE_NAME} COLOUR: ${!DYNAMIC_VARIABLE_NAME} colour ${RESET_ALL}\n"
+
 
 done
 
