@@ -1,5 +1,8 @@
 #!/bin/bash
 
+printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Edges    "
+sleep 0.1
+
 # Import script
 source ./tools/edge/define_edge.sh
 
@@ -15,5 +18,4 @@ define_edge EDGE_DUAL $ICON_0DD0 $ICON_DH $ICON_00DD $ICON_DV $ICON_D00D $ICON_D
 ## Dots edges
 define_edge EDGE_DOTS $ICON_TL $ICON_FH_DOTS $ICON_TR $ICON_FV_DOTS $ICON_BR $ICON_FH_DOTS $ICON_BL $ICON_FV_DOTS
 
-
-printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Edges : \t${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"
+printf "\t  ${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"

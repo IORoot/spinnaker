@@ -1,5 +1,8 @@
 #!/bin/bash
 
+printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Padding  "
+sleep 0.1
+
 # Import script
 source ./tools/padding/define_padding.sh
 
@@ -268,4 +271,4 @@ define_padding PL_3_6    $W_3_6
 define_padding PL_4_6    $W_4_6
 define_padding PL_5_6    $W_5_6
 
-printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Padding : \t${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"
+printf "\t  ${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"

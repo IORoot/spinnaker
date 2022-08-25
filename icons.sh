@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# All unicode charts at: https://www.unicode.org/charts/
+
+printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Icons    "
+sleep 0.1
+
 # Import script
 source ./tools/icons/define_icon.sh
 
@@ -479,4 +484,17 @@ define_icon ICON_ROCKET  1F680
 define_icon ICON_LIFE    1F6DF
 define_icon ICON_SAUCER  1F6F8
 
-printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Icons : \t${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"
+# ┌────────────────────────────────────┐
+# │                                    │
+# │             KEYBOARD               │
+# │                                    │
+# └────────────────────────────────────┘
+
+# ⌘ ⌥ ⌗ ⏻ 
+define_icon ICON_CMD     2318
+define_icon ICON_OPT     2325
+define_icon ICON_HASH    2317
+define_icon ICON_PWR     23FB
+
+
+printf "\t  ${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"

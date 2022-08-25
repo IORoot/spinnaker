@@ -1,9 +1,14 @@
 #!/bin/bash
 
+./spin.sh
+
 . ./reset.sh
+. ./spinners.sh
 . ./colours.sh
 . ./styling.sh
 . ./icons.sh
 . ./spacing.sh
 . ./padding.sh
 . ./edges.sh
+
+stopspin
