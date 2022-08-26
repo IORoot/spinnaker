@@ -4,7 +4,7 @@ printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Edges    "
 sleep 0.1
 
 # Import script
-source ./tools/edge/define_edge.sh
+source $SPINNAKER_DEFINE_FOLDER/define_edge.sh
 
 ## Fine edges
 define_edge EDGE_FINE $ICON_0FF0 $ICON_FH $ICON_00FF $ICON_FV $ICON_F00F $ICON_FH $ICON_FF00 $ICON_FV

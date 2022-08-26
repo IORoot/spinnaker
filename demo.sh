@@ -1,5 +1,13 @@
 #!/bin/bash
 
+source ./spinnaker
+
+# ┌────────────────────────────────────┐
+# │                                    │
+# │            TEXT COLOURS            │
+# │                                    │
+# └────────────────────────────────────┘
+
 printf "\n${TEXT_EMERALD_500}TEXT COLOURS${RESET}\n"
 
 printf "\n${TEXT_PINK_500}TEXT_SLATE_: ${RESET}\t"
@@ -70,6 +78,11 @@ printf "${TEXT_ROSE_100}100 ${TEXT_ROSE_200}200 ${TEXT_ROSE_300}300 ${TEXT_ROSE_
 
 printf '\n'
 
+# ┌────────────────────────────────────┐
+# │                                    │
+# │         BACKGROUND COLOURS         │
+# │                                    │
+# └────────────────────────────────────┘
 
 printf "\n${TEXT_EMERALD_500}BG COLOURS${RESET}\n"
 
@@ -142,6 +155,11 @@ printf "${BG_ROSE_100}100 ${BG_ROSE_200}200 ${BG_ROSE_300}300 ${BG_ROSE_400}400 
 printf '\n'
 
 
+# ┌────────────────────────────────────┐
+# │                                    │
+# │               ICONS                │
+# │                                    │
+# └────────────────────────────────────┘
 
 printf "\n${TEXT_EMERALD_500}BLOCK ICONS${RESET}\n"
 
@@ -319,73 +337,113 @@ printf "${TEXT_VIOLET_500} ${ICON_RL} ${ICON_LR} ${ICON_X}"
 printf "\n"
 
 
-
+# ┌────────────────────────────────────┐
+# │                                    │
+# │               WIDTHS               │
+# │                                    │
+# └────────────────────────────────────┘
 
 printf "\n${TEXT_EMERALD_500}WIDTHS & LINES:${RESET}\n"
 
 printf "\n${TEXT_PINK_500}W_FULL:${RESET}\n"
-./draw/line.sh $W_FULL $TEXT_EMERALD_300$ICON_DH
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_FULL $TEXT_EMERALD_300$ICON_DH
 
+printf "\n${TEXT_PINK_500}W_1_2: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_1_2 $TEXT_AMBER_300$ICON_FH
 
-printf "\n${TEXT_PINK_500}W1_2: ${RESET}\n"
-./draw/line.sh $W1_2 $TEXT_AMBER_300$ICON_FH
+printf "\n${TEXT_PINK_500}W_2_3: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_2_3 $TEXT_SKY_300$ICON_WH
 
+printf "\n${TEXT_PINK_500}W_1_3: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_1_3 $TEXT_SKY_300$ICON_WH
 
+printf "\n${TEXT_PINK_500}W_3_4: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_3_4 $TEXT_PINK_300$ICON_WH_DASH
 
-printf "\n${TEXT_PINK_500}W2_3: ${RESET}\n"
-./draw/line.sh $W2_3 $TEXT_SKY_300$ICON_WH
+printf "\n${TEXT_PINK_500}W_2_4: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_2_4 $TEXT_PINK_300$ICON_WH_DASH
 
+printf "\n${TEXT_PINK_500}W_1_4: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_1_4 $TEXT_PINK_300$ICON_WH_DASH
 
-printf "\n${TEXT_PINK_500}W1_3: ${RESET}\n"
-./draw/line.sh $W1_3 $TEXT_SKY_300$ICON_WH
+printf "\n${TEXT_PINK_500}W_4_5: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_4_5 $TEXT_LIME_300$ICON_WH_DASH
 
+printf "\n${TEXT_PINK_500}W_3_5: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_3_5 $TEXT_LIME_300$ICON_WH_DASH
 
+printf "\n${TEXT_PINK_500}W_2_5: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_2_5 $TEXT_LIME_300$ICON_WH_DASH
 
-printf "\n${TEXT_PINK_500}W3_4: ${RESET}\n"
-./draw/line.sh $W3_4 $TEXT_PINK_300$ICON_WH_DASH
+printf "\n${TEXT_PINK_500}W_1_5: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_1_5 $TEXT_LIME_300$ICON_WH_DASH
 
+printf "\n${TEXT_PINK_500}W_5_6: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_5_6 $TEXT_VIOLET_300$ICON_WH_DOTS
 
-printf "\n${TEXT_PINK_500}W2_4: ${RESET}\n"
-./draw/line.sh $W2_4 $TEXT_PINK_300$ICON_WH_DASH
+printf "\n${TEXT_PINK_500}W_4_6: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_4_6 $TEXT_VIOLET_300$ICON_WH_DOTS
 
+printf "\n${TEXT_PINK_500}W_3_6: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_3_6 $TEXT_VIOLET_300$ICON_WH_DOTS
 
-printf "\n${TEXT_PINK_500}W1_4: ${RESET}\n"
-./draw/line.sh $W1_4 $TEXT_PINK_300$ICON_WH_DASH
+printf "\n${TEXT_PINK_500}W_2_6: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_2_6 $TEXT_VIOLET_300$ICON_WH_DOTS
 
-
-
-
-printf "\n${TEXT_PINK_500}W4_5: ${RESET}\n"
-./draw/line.sh $W4_5 $TEXT_LIME_300$ICON_WH_DASH
-
-
-printf "\n${TEXT_PINK_500}W3_5: ${RESET}\n"
-./draw/line.sh $W3_5 $TEXT_LIME_300$ICON_WH_DASH
-
-
-printf "\n${TEXT_PINK_500}W2_5: ${RESET}\n"
-./draw/line.sh $W2_5 $TEXT_LIME_300$ICON_WH_DASH
-
-
-printf "\n${TEXT_PINK_500}W1_5: ${RESET}\n"
-./draw/line.sh $W1_5 $TEXT_LIME_300$ICON_WH_DASH
-
-
-
-
-printf "\n${TEXT_PINK_500}W5_6: ${RESET}\n"
-./draw/line.sh $W5_6 $TEXT_VIOLET_300$ICON_WH_DOTS
-
-printf "\n${TEXT_PINK_500}W4_6: ${RESET}\n"
-./draw/line.sh $W4_6 $TEXT_VIOLET_300$ICON_WH_DOTS
-
-printf "\n${TEXT_PINK_500}W3_6: ${RESET}\n"
-./draw/line.sh $W3_6 $TEXT_VIOLET_300$ICON_WH_DOTS
-
-printf "\n${TEXT_PINK_500}W2_6: ${RESET}\n"
-./draw/line.sh $W2_6 $TEXT_VIOLET_300$ICON_WH_DOTS
-
-printf "\n${TEXT_PINK_500}W1_6: ${RESET}\n"
-./draw/line.sh $W1_6 $TEXT_VIOLET_300$ICON_WH_DOTS
+printf "\n${TEXT_PINK_500}W_1_6: ${RESET}\n"
+$SPINNAKER_COMPONENTS_FOLDER/line.sh $W_1_6 $TEXT_VIOLET_300$ICON_WH_DOTS
 printf '\n'
 
+
+# ┌────────────────────────────────────┐
+# │                                    │
+# │              SPINNERS              │
+# │                                    │
+# └────────────────────────────────────┘
+
+printf "\n${TEXT_EMERALD_500}SPINNERS:${RESET}\n"
+
+source $SPINNAKER_TOOLS_FOLDER/spinner/spinner.sh
+
+SPINNER_DONEFILE="/tmp/donespinning"
+
+# Turn off color cycling, as it can make it harder to see the design
+SPINNER_COLORCYCLE=0
+SPINNER_COLORNUM=1
+
+run_test () {
+    SPINNER_SYMBOLS=$1
+    # Auto cycle through colors
+    if [ $SPINNER_COLORNUM -eq 7 ]; then
+        SPINNER_COLORNUM=1
+    else
+        SPINNER_COLORNUM=$((SPINNER_COLORNUM+1))
+    fi
+
+    printf "${SPINNER_SYMBOLS}: "
+    spinner &
+    sleep 3
+    touch "donespinning"
+    sleep 0.1
+    printf "\n"
+}
+
+# printf "${TEXT_PINK_500}Single character Unicode spinners${RESET_TEXT}\n"
+
+# for s in SPIN_SPIN SPIN_LEVEL SPIN_LOAD SPIN_CYLON SPIN_TURN SPIN_PULSE; do
+#   run_test ${s}
+# done
+
+# for s in SPIN_CHOP SPIN_COOL SPIN_DIGI SPIN_SPIN SPIN_BLOW SPIN_MARK ; do
+#   run_test ${s}
+# done
+
+# for s in SPIN_CUBE SPIN_PACMAN SPIN_CHOP SPIN_MOON SPIN_GAIA SPIN_LORRY ; do
+#   run_test ${s}
+# done
+
+for s in SPIN_UPDN SPIN_WALK ; do
+    run_test ${s}
+done
+
+run_test SPIN_UPDN

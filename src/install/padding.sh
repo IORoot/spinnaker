@@ -4,7 +4,7 @@ printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Padding  "
 sleep 0.1
 
 # Import script
-source ./tools/padding/define_padding.sh
+source $SPINNAKER_DEFINE_FOLDER/define_padding.sh
 
 # ┌────────────────────────────────────┐
 # │                                    │

@@ -4,7 +4,7 @@ printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Colours  "
 sleep 0.1
 
 # Import scripts
-source ./tools/colours/define_colour.sh
+source $SPINNAKER_DEFINE_FOLDER/define_colour.sh
 
 define_colours(){
 
@@ -258,4 +258,4 @@ define_colours(){
 
 define_colours
 
-printf "\t  ${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\n"
+printf "\t  ${TEXT_STONE_50}${BG_EMERALD_500} Defined ${RESET}\e[0m\n"

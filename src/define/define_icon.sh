@@ -4,7 +4,7 @@
 
 define_icon(){
 
-    ICON=$(./tools/icons/unicodeToEmoji.sh $2)
+    ICON=$(${SPINNAKER_TOOLS_FOLDER}/icons/unicodeToEmoji.sh $2)
     export declare $1=${ICON}
     
 }

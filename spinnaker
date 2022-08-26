@@ -1,14 +1,54 @@
 #!/bin/bash
 
-./spin.sh
 
-. ./reset.sh
-. ./spinners.sh
-. ./colours.sh
-. ./styling.sh
-. ./icons.sh
-. ./spacing.sh
-. ./padding.sh
-. ./edges.sh
 
-stopspin
+
+sourced=0
+if [ -n "$ZSH_VERSION" ]; then 
+    case $ZSH_EVAL_CONTEXT in *:file) sourced=1;; esac
+elif [ -n "$KSH_VERSION" ]; then
+    [ "$(cd -- "$(dirname -- "$0")" && pwd -P)/$(basename -- "$0")" != "$(cd -- "$(dirname -- "${.sh.file}")" && pwd -P)/$(basename -- "${.sh.file}")" ] && sourced=1
+elif [ -n "$BASH_VERSION" ]; then
+    (return 0 2>/dev/null) && sourced=1 
+else
+    case ${0##*/} in sh|-sh|dash|-dash) sourced=1;; esac
+fi
+
+
+# ┌────────────────────────────────────────────────────────┐
+# │                                                        │
+# │          Exit if script is not being sourced.          │
+# │                                                        │
+# └────────────────────────────────────────────────────────┘
+if ! [[ "$sourced" == 1 ]]; then
+    printf "Script is not being sourced. Please source this script.\n"
+    printf "Either with a dot infront or with the 'source' keyword.\n"
+    printf ". ./spinnaker\n"
+    exit 1
+fi
+
+# ┌────────────────────────────────────────────────────────┐
+# │                                                        │
+# │         Define directory environment variables         │
+# │                                                        │
+# └────────────────────────────────────────────────────────┘
+export SPINNAKER_PWD_FOLDER=$(pwd)
+export SPINNAKER_SRC_FOLDER="${SPINNAKER_PWD_FOLDER}/src"
+export SPINNAKER_COMPONENTS_FOLDER="${SPINNAKER_SRC_FOLDER}/components"
+export SPINNAKER_DEFINE_FOLDER="${SPINNAKER_SRC_FOLDER}/define"
+export SPINNAKER_INSTALL_FOLDER="${SPINNAKER_SRC_FOLDER}/install"
+export SPINNAKER_TOOLS_FOLDER="${SPINNAKER_SRC_FOLDER}/tools"
+
+# ┌────────────────────────────────────────────────────────┐
+# │                                                        │
+# │          Source all component install scripts          │
+# │                                                        │
+# └────────────────────────────────────────────────────────┘
+source $SPINNAKER_INSTALL_FOLDER/colours.sh
+source $SPINNAKER_INSTALL_FOLDER/reset.sh
+source $SPINNAKER_INSTALL_FOLDER/styling.sh
+source $SPINNAKER_INSTALL_FOLDER/icons.sh
+source $SPINNAKER_INSTALL_FOLDER/spacing.sh
+source $SPINNAKER_INSTALL_FOLDER/padding.sh
+source $SPINNAKER_INSTALL_FOLDER/edges.sh
+source $SPINNAKER_INSTALL_FOLDER/spinners.sh

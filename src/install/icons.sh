@@ -6,7 +6,7 @@ printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Icons    "
 sleep 0.1
 
 # Import script
-source ./tools/icons/define_icon.sh
+source $SPINNAKER_DEFINE_FOLDER/define_icon.sh
 
 # ┌────────────────────────────────────┐
 # │                                    │

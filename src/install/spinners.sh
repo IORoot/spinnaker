@@ -1,11 +1,10 @@
 #!/bin/bash
 
-
 printf "${TEXT_STONE_400}Environment Variables for ${TEXT_STONE_100}Spinners "
 sleep 0.1
 
 # get function for defining spinner environment variable
-source ./tools/spinner/define_spinner.sh
+source $SPINNAKER_DEFINE_FOLDER/define_spinner.sh
 
 # Define all the spinners
 spinner_parts() {

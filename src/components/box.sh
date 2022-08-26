@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Import functions to use
-. ../utils/line_count.sh
-. ../utils/longest_text_line.sh
-. ../utils/repeat_characters.sh
-. ../spacing/define_widths.sh
-. ../spacing/define_heights.sh
+source $SPINNAKER_TOOLS_FOLDER/utils/line_count.sh
+source $SPINNAKER_TOOLS_FOLDER/utils/longest_text_line.sh
+source $SPINNAKER_TOOLS_FOLDER/utils/repeat_characters.sh
+source $SPINNAKER_DEFINE_FOLDER/define_widths.sh
+source $SPINNAKER_DEFINE_FOLDER/define_heights.sh
 
 # Create a box
 #
@@ -80,7 +80,7 @@ box()
     # by setting them to supplied user values.
     #
     # @return $PREFIX_VARIABLE
-    . ../utils/parse_classes.sh "${PREFIX}" "${CLASSES}"
+    source $SPINNAKER_TOOLS_FOLDER/utils/parse_classes.sh "${PREFIX}" "${CLASSES}"
 
 
     # LONGEST LINE
