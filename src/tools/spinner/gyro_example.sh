@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ora.sh
+source $SPINNAKER_TOOLS_FOLDER/spinner/gyro.sh
 
 task_1() {
   sleep 2

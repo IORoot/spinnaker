@@ -5,9 +5,7 @@ CYAN=$(tput setaf 6)
 NORMAL=$(tput sgr0)
 BOLD=$(tput bold)
 
-
-
-spinner() {
+gyro() {
 	FUNCTION_NAME="$2"
 	VARIABLE_NAME="${3:-}"
 
