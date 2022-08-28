@@ -17,6 +17,8 @@
 - [x] Lines (LINE_)             - Horizontal line of different widths (full, half, third, quarter, fifth, sixth, N-characters)
 - [x] Spinner (SPINNER_)        - Display a spinning progress indicator
 - [X] Padding (P_)              - Add space around element - [PT_, PR_, PB_, PL_] with N-characters
+- [ ] Select Options (SELECT_)  - Create tickboxs of multiple options of things to run
+- [ ] Usage (USAGE)             - Display a pretty usage message.
 - [ ] Header (HEAD_)            - A header style for your app. Make it sticky or not.
 - [ ] Button (BUTTON_)          - Button for various actions. Confirm, cancel, submit, etc...
 - [ ] Footer (FOOT_)            - Add a footer to the bottom of the app. Make it sticky or not.
@@ -24,7 +26,6 @@
 - [ ] Position (POS_)           - Text position (Left, center, right. Top / Bottom?)
 - [ ] Page (PAGE_)              - Add blank page canvas
 - [ ] Menu Options (MENU_)      - Create a menu with various options that run single commands / functions
-- [ ] Select Options (SELECT_)  - Create tickboxs of multiple options of things to run
 - [ ] Text Input (INPUT_TEXT_)  - Take input for a single-line of text
 - [ ] Text Area (INPUT_AREA_)   - Take input for multi-line text input
 - [ ] Timer (TIMER_)            - Countdown timer, stopwatch. Good for progress of things.

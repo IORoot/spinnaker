@@ -1,0 +1,16 @@
+{
+  "select": [
+    {
+      "title": "alpha option",
+      "description": "the first option",
+      "style": "TEXT_SLATE_500",
+      "command": "echo \"ALPHA\""
+    },
+    {
+      "title": "bravo option",
+      "description": "this is bravo",
+      "style": "TEXT_EMERALD_500",
+      "command": "echo \"BRAVO\""
+    }
+  ]
+}
