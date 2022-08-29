@@ -100,11 +100,12 @@ function select_option {
                             if [[ $key = $ESC[B ]]; then echo down;  fi                 # If the DOWN key is pressed, echo down
                             if [[ $key = ""     ]]; then echo enter; fi; }              # If the any key is pressed, echo enter
 
-    footer() { printf "FOOTER" }
 
     # initially print empty new lines (scroll down if at bottom of screen)
-    NEWLINE_COUNT=$(( ( $# * $HEIGHT ) + $FOOTER_HEIGHT ))
+    NEWLINE_COUNT=$(( ( $# * $HEIGHT ) ))
     for (( c=1; c<=$NEWLINE_COUNT; c++)) ; do printf "\n" ; done
+
+    # printf "$TEXT_STONE_600 $ICON_ARROW_N up $ICON_CIRCLE $ICON_ARROW_S down $ICON_CIRCLE enter choose $RESET_TEXT";
 
     # determine current screen position for overwriting the options
     local lastrow=$(get_terminal_height)                                                # lastrow is the bottom of the terminal

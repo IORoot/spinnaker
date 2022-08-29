@@ -23,8 +23,11 @@ function options(){
     # Store the length of select array
     JSON_SELECT_LENGTH=$(getarrlen select.options)
     CLEAR_SCREEN=$(getkey select.clear)
+    CLEAR_BEFORE_COMMAND_SCREEN=$(getkey select.clear_before_command)
     declare SELECT_ARRAY_SIDEBAR_ICON=$(getkey select.icon)
     HIDE_MESSAGE=$(getkey select.hide_message)
+    DISPLAY_HELP=$(getkey select.display_help)
+    RESET_LOOP=$(getkey select.reset_loop)
 
     if $CLEAR_SCREEN; then clear; fi
 
@@ -77,6 +80,10 @@ function options(){
 
     done
 
+    # Show the arrows help message
+    if $DISPLAY_HELP; then
+        printf "\n $TEXT_STONE_500 $ICON_ARROW_N $TEXT_STONE_600 up $ICON_CIRCLE $TEXT_STONE_500 $ICON_ARROW_S $TEXT_STONE_600 down $ICON_CIRCLE $TEXT_STONE_500 enter $TEXT_STONE_600 choose $RESET_TEXT\n\n";
+    fi
 
     select_option "${SELECT_ARRAY[@]}"
     choice=$?
@@ -90,8 +97,12 @@ function options(){
         printf "Running command:${TEXT_EMERALD_300} ${COMMAND} ${RESET_TEXT}\n"
     fi
 
+    if $CLEAR_BEFORE_COMMAND_SCREEN; then clear; fi
     eval "${COMMAND}"
 
+    if $RESET_HELP; then
+        options $@
+    fi
 }
 
 # Check is file is being passed

@@ -377,7 +377,7 @@ define_icon ICON_CHEVRON_D  2BC6
 define_icon ICON_CHEVRON_L  2BC7
 
 # ↑ ↗ → ↘ ↓ ↙ ← ↖ ↔ ↕
-define_icon ICON_ARROW_N   2BC7
+define_icon ICON_ARROW_N   2191
 define_icon ICON_ARROW_NE  2197
 define_icon ICON_ARROW_E   2192
 define_icon ICON_ARROW_SE  2198

@@ -1,9 +1,11 @@
 {
   "select": {
     "clear": false,
+    "clear_before_command": true,
     "icon": "ICON_FADE_200",
     "hide_message": true,
     "display_help": true,
+    "reset_loop": true,
     "options": [
       {
         "title": "${ICON_ROCKET} Username",
@@ -23,6 +25,7 @@
       },
       {
         "title": "${ICON_CMD} OS Name",
+        "title_style": "TEXT_AMBER_300",
         "description": "uname",
         "description_style": "TEXT_GRAY_500",
         "command": "uname",
