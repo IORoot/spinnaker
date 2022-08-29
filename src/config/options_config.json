@@ -1,27 +1,31 @@
 {
   "select": {
+    "clear": false,
+    "icon": "ICON_DV",
+    "hide_message": true,
     "options": [
       {
-        "title": "alpha option",
-        "title_style": "TEXT_SLATE_500",
-        "description": "the first option",
-        "description_style": "TEXT_EMERALD_300",
-        "command": "echo \"ALPHA\""
+        "title": "${ICON_ROCKET} alpha option",
+        "title_style": "",
+        "description": "Whoami ${ICON_HOUSE}",
+        "description_style": "TEXT_GRAY_500",
+        "command": "whoami",
+        "sidebar_style": "BORDER_SKY_400"
       },
       {
         "title": "bravo option",
         "title_style": "",
-        "description": "this is bravo",
-        "description_style": "TEXT_SKY_300",
-        "command": "echo \"BRAVO\""
+        "description": "uname",
+        "description_style": "TEXT_GRAY_500",
+        "command": "uname -a",
+        "sidebar_style": "BORDER_EMERALD_400"
       },
       {
         "title": "charlie option",
-        "title_style": "TEXT_EMERALD_300",
         "description": "this is charlie",
-        "description_style": "TEXT_PINK_300",
+        "description_style": "TEXT_GRAY_500",
         "command": "echo \"CHARLIE\"",
-        "sidebar_style": "BORDER_RED_400"
+        "sidebar_style": "BORDER_PINK_400"
       }
     ]
   }

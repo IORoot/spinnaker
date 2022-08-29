@@ -17,16 +17,16 @@ function options(){
     # Take first arg as Config file
     CONFIG_FILE=$1
 
-    # Clear the screen
-    clear
-
     # Run file through the parser
     JSON_PARSED=$($PARSER < $CONFIG_FILE)
 
     # Store the length of select array
     JSON_SELECT_LENGTH=$(getarrlen select.options)
-    JSON_OPTION_HEIGHT=$(getarrlen select.config.option_height)
-    
+    CLEAR_SCREEN=$(getkey select.clear)
+    declare SELECT_ARRAY_SIDEBAR_ICON=$(getkey select.icon)
+    HIDE_MESSAGE=$(getkey select.hide_message)
+
+    if $CLEAR_SCREEN; then clear; fi
 
     SELECT_ARRAY=()
     # Loop through select object to get each array
@@ -80,8 +80,18 @@ function options(){
 
     select_option "${SELECT_ARRAY[@]}"
     choice=$?
+    # echo "Choosen index = $choice"
 
-    echo "Choosen index = $choice"
+    COMMAND_NAME="SELECT_ARRAY_COMMAND_$choice"
+
+    COMMAND="${!COMMAND_NAME}"
+
+    if ! $HIDE_MESSAGE; then
+        printf "Running command:${TEXT_EMERALD_300} ${COMMAND} ${RESET_TEXT}\n"
+    fi
+
+    eval "${COMMAND}"
+
 }
 
 # Check is file is being passed

@@ -42,10 +42,14 @@ function select_option {
         DESCRIPTION=$(ref_to_content "SELECT_ARRAY_DESCRIPTION_${LOOP_INDEX}")
         DESCRIPTION_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_DESCRIPTION_STYLE_${LOOP_INDEX}")
 
+        TITLE=$(eval "printf \"${TITLE}\"")
+        DESCRIPTION=$(eval "printf \"${DESCRIPTION}\"")
+
         OPTION_TEXT=''
         OPTION_TEXT+="  "
         OPTION_TEXT+="${TITLE_STYLE}"
         OPTION_TEXT+="${TITLE}\n"
+        OPTION_TEXT+="${RESET_TEXT}"
         OPTION_TEXT+="  "
         OPTION_TEXT+="${DESCRIPTION_STYLE}"
         OPTION_TEXT+="${DESCRIPTION}"
@@ -63,15 +67,19 @@ function select_option {
         DESCRIPTION=$(ref_to_content "SELECT_ARRAY_DESCRIPTION_${LOOP_INDEX}")
         DESCRIPTION_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_DESCRIPTION_STYLE_${LOOP_INDEX}")
         SIDEBAR_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_SIDEBAR_STYLE_${LOOP_INDEX}")
+        SIDEBAR_ICON=$(ref_to_content "$SELECT_ARRAY_SIDEBAR_ICON")
+
+        TITLE=$(eval "printf \"${TITLE}\"")
+        DESCRIPTION=$(eval "printf \"${DESCRIPTION}\"")
 
         OPTION_TEXT=''
         OPTION_TEXT+="${SIDEBAR_STYLE}"
-        OPTION_TEXT+="${ICON_SIDE_L} "
+        OPTION_TEXT+="${SIDEBAR_ICON} "
         OPTION_TEXT+="${TITLE_STYLE}"
         OPTION_TEXT+="${TITLE}\n"
         OPTION_TEXT+="${RESET_TEXT}"
         OPTION_TEXT+="${SIDEBAR_STYLE}"
-        OPTION_TEXT+="${ICON_SIDE_L} "
+        OPTION_TEXT+="${SIDEBAR_ICON} "
         OPTION_TEXT+="${DESCRIPTION_STYLE}"
         OPTION_TEXT+="${DESCRIPTION}"
         OPTION_TEXT+="${RESET_ALL}"
