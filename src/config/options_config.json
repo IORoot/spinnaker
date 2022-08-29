@@ -1,16 +1,28 @@
 {
-  "select": [
-    {
-      "title": "alpha option",
-      "description": "the first option",
-      "style": "TEXT_SLATE_500",
-      "command": "echo \"ALPHA\""
-    },
-    {
-      "title": "bravo option",
-      "description": "this is bravo",
-      "style": "TEXT_EMERALD_500",
-      "command": "echo \"BRAVO\""
-    }
-  ]
+  "select": {
+    "options": [
+      {
+        "title": "alpha option",
+        "title_style": "TEXT_SLATE_500",
+        "description": "the first option",
+        "description_style": "TEXT_EMERALD_300",
+        "command": "echo \"ALPHA\""
+      },
+      {
+        "title": "bravo option",
+        "title_style": "",
+        "description": "this is bravo",
+        "description_style": "TEXT_SKY_300",
+        "command": "echo \"BRAVO\""
+      },
+      {
+        "title": "charlie option",
+        "title_style": "TEXT_EMERALD_300",
+        "description": "this is charlie",
+        "description_style": "TEXT_PINK_300",
+        "command": "echo \"CHARLIE\"",
+        "sidebar_style": "BORDER_RED_400"
+      }
+    ]
+  }
 }
