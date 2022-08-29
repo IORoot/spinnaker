@@ -11,7 +11,7 @@
         "title": "${ICON_ROCKET} Username",
         "title_style": "",
         "description": "Whoami",
-        "description_style": "TEXT_GRAY_500",
+        "description_style": "TEXT_GRAY_500 BG_BLUE_900",
         "command": "whoami",
         "sidebar_style": "BORDER_SKY_400"
       },
