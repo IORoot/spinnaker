@@ -34,34 +34,34 @@ function select_option {
     }
 
     print_option()     {                                                                # Print $1
-        # TEXT=$1
-        # LOOP_INDEX=$2
+        TEXT=$1
+        LOOP_INDEX=$2
 
-        # TITLE=$( ref_to_content "SELECT_ARRAY_TITLE_${LOOP_INDEX}" )
-        # TITLE_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_TITLE_STYLE_${LOOP_INDEX}")
-        # DESCRIPTION=$(ref_to_content "SELECT_ARRAY_DESCRIPTION_${LOOP_INDEX}")
-        # DESCRIPTION_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_DESCRIPTION_STYLE_${LOOP_INDEX}")
+        TITLE=$( ref_to_content "SELECT_ARRAY_TITLE_${LOOP_INDEX}" )
+        TITLE_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_TITLE_STYLE_${LOOP_INDEX}")
+        DESCRIPTION=$(ref_to_content "SELECT_ARRAY_DESCRIPTION_${LOOP_INDEX}")
+        DESCRIPTION_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_DESCRIPTION_STYLE_${LOOP_INDEX}")
 
-        # OPTION_TEXT=''
-        # OPTION_TEXT+="  "
-        # OPTION_TEXT+="${TITLE_STYLE}"
-        # OPTION_TEXT+="${TITLE}\n"
-        # OPTION_TEXT+="  "
-        # OPTION_TEXT+="${DESCRIPTION_STYLE}"
-        # OPTION_TEXT+="${DESCRIPTION}"
-        # OPTION_TEXT+="${RESET_ALL}"
+        OPTION_TEXT=''
+        OPTION_TEXT+="  "
+        OPTION_TEXT+="${TITLE_STYLE}"
+        OPTION_TEXT+="${TITLE}\n"
+        OPTION_TEXT+="  "
+        OPTION_TEXT+="${DESCRIPTION_STYLE}"
+        OPTION_TEXT+="${DESCRIPTION}"
+        OPTION_TEXT+="${RESET_ALL}"
 
-        # printf "$OPTION_TEXT"; 
-        echo "$1"
+        printf "$OPTION_TEXT"; 
+        # echo "$1"
     }               
 
     invert_selected()  {                                                                # Invert the selection
-        # TEXT=$1
-        # OPTION=$2
+        TEXT=$1
+        OPTION=$2
 
-        # VARNAME="SELECT_ARRAY_SIDEBAR_STYLE_${OPTION}"
-        # SIDEBAR_STYLE=${!VARNAME}
-        # COLOUR=${SIDEBAR_STYLE}
+        VARNAME="SELECT_ARRAY_SIDEBAR_STYLE_${OPTION}"
+        SIDEBAR_STYLE=${!VARNAME}
+        COLOUR=${SIDEBAR_STYLE}
 
         # printf "${!COLOUR}$TEXT";
         printf "$ESC[7m$1$ESC[27m"; 
@@ -75,7 +75,7 @@ function select_option {
 
     key_input()        { read -s -n3 key 2>/dev/null >&2                                # Read the key input
                             if [[ $key = $ESC[A ]]; then echo up;    fi                 # If the UP key is pressed, echo up
-                            if [[ $key = $ESCd[B ]]; then echo down;  fi                 # If the DOWN key is pressed, echo down
+                            if [[ $key = $ESC[B ]]; then echo down;  fi                 # If the DOWN key is pressed, echo down
                             if [[ $key = ""     ]]; then echo enter; fi; }              # If the any key is pressed, echo enter
 
     # initially print empty new lines (scroll down if at bottom of screen)
