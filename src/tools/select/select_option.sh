@@ -33,7 +33,7 @@ function select_option {
         echo "${OUTPUT}"
     }
 
-    print_option()     {                                                                # Print $1
+    print_option()     {                                                                # Print Text
         TEXT=$1
         LOOP_INDEX=$2
 
@@ -52,19 +52,32 @@ function select_option {
         OPTION_TEXT+="${RESET_ALL}"
 
         printf "$OPTION_TEXT"; 
-        # echo "$1"
     }               
 
-    invert_selected()  {                                                                # Invert the selection
+    invert_selected()  {                                                                # Selected Text
         TEXT=$1
-        OPTION=$2
+        LOOP_INDEX=$2
 
-        VARNAME="SELECT_ARRAY_SIDEBAR_STYLE_${OPTION}"
-        SIDEBAR_STYLE=${!VARNAME}
-        COLOUR=${SIDEBAR_STYLE}
+        TITLE=$( ref_to_content "SELECT_ARRAY_TITLE_${LOOP_INDEX}" )
+        TITLE_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_TITLE_STYLE_${LOOP_INDEX}")
+        DESCRIPTION=$(ref_to_content "SELECT_ARRAY_DESCRIPTION_${LOOP_INDEX}")
+        DESCRIPTION_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_DESCRIPTION_STYLE_${LOOP_INDEX}")
+        SIDEBAR_STYLE=$(ref_to_ref_to_content "SELECT_ARRAY_SIDEBAR_STYLE_${LOOP_INDEX}")
 
-        # printf "${!COLOUR}$TEXT";
-        printf "$ESC[7m$1$ESC[27m"; 
+        OPTION_TEXT=''
+        OPTION_TEXT+="${SIDEBAR_STYLE}"
+        OPTION_TEXT+="${ICON_SIDE_L} "
+        OPTION_TEXT+="${TITLE_STYLE}"
+        OPTION_TEXT+="${TITLE}\n"
+        OPTION_TEXT+="${RESET_TEXT}"
+        OPTION_TEXT+="${SIDEBAR_STYLE}"
+        OPTION_TEXT+="${ICON_SIDE_L} "
+        OPTION_TEXT+="${DESCRIPTION_STYLE}"
+        OPTION_TEXT+="${DESCRIPTION}"
+        OPTION_TEXT+="${RESET_ALL}"
+
+        printf "$OPTION_TEXT"; 
+
     }                                  
 
     get_terminal_height()   {                                                           # Get the number of terminal rows

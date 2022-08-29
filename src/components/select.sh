@@ -43,17 +43,13 @@ function options(){
         declare LOOP_SELECT_HEIGHT=$(getkey select.options[$LOOP].height)
         declare LOOP_SELECT_SIDEBAR_STYLE=$(getkey select.options[$LOOP].sidebar_style)
 
-# echo "LOOP_SELECT_SIDEBAR_STYLE: $LOOP_SELECT_SIDEBAR_STYLE"
-
         # Remove the forward escape slashes in the command field
         LOOP_SELECT_COMMAND=${LOOP_SELECT_COMMAND//\\/}  
 
 
         # DEFAULT STYLES
         TITLE_STYLE_TEXT_COLOUR="${TEXT_GRAY_100}"
-
         DESCRIPTION_STYLE_TEXT_COLOUR="${TEXT_GRAY_400}"
-
         SIDELINE_STYLE_BORDER_COLOUR="${BORDER_GRAY_900}"
 
         # OVERRIDES
@@ -66,22 +62,8 @@ function options(){
         source $SPINNAKER_TOOLS_FOLDER/utils/parse_classes.sh "TITLE_STYLE" "${LOOP_SELECT_TITLE_STYLE}"
         source $SPINNAKER_TOOLS_FOLDER/utils/parse_classes.sh "DESCRIPTION_STYLE" "${LOOP_SELECT_DESCRIPTION_STYLE}"
 
-        # Create a box
-        OPTION_TEXT=''
-        OPTION_TEXT+="${SIDELINE_STYLE_BORDER_COLOUR}"
-        OPTION_TEXT+="${ICON_SIDE_L} "
-        OPTION_TEXT+="${TITLE_STYLE_TEXT_COLOUR}"
-        OPTION_TEXT+="${LOOP_SELECT_TITLE}\n"
-        OPTION_TEXT+="${SIDELINE_STYLE_BORDER_COLOUR}"
-        OPTION_TEXT+="${ICON_SIDE_L} "
-        OPTION_TEXT+="${DESCRIPTION_STYLE_TEXT_COLOUR}"
-        OPTION_TEXT+="${LOOP_SELECT_DESCRIPTION}"
-
-        # Output value
-        OPTION_VALUE=$( printf "$OPTION_TEXT" )
-
         # Add to array
-        SELECT_ARRAY+=("${OPTION_VALUE}")
+        SELECT_ARRAY+=("")
 
         # Create environment variables of results
         declare SELECT_ARRAY_INDEX_$LOOP="${LOOP_SELECT_INDEX}"
