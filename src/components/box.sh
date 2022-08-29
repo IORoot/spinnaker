@@ -1,11 +1,174 @@
 #!/bin/bash
 
-# Import functions to use
-source $SPINNAKER_TOOLS_FOLDER/utils/line_count.sh
-source $SPINNAKER_TOOLS_FOLDER/utils/longest_text_line.sh
-source $SPINNAKER_TOOLS_FOLDER/utils/repeat_characters.sh
-source $SPINNAKER_DEFINE_FOLDER/define_widths.sh
-source $SPINNAKER_DEFINE_FOLDER/define_heights.sh
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │             Line Count              │
+# │                                     │
+# └─────────────────────────────────────┘
+# source $SPINNAKER_TOOLS_FOLDER/utils/line_count.sh
+line_count(){
+
+    TEXT_STRING=$1
+
+    # replace any '\n' (newlines) with ‰
+    local STRING_ARRAY=${TEXT_STRING//'\n'/$'‰'}
+    local STRING_ARRAY=${STRING_ARRAY//$'\n'/$'‰'}
+    
+    # split by ‰ and make an array of each line
+    IFS=$'‰' read -r -a ARRAY_OF_LINES <<< "$STRING_ARRAY"
+
+    # Number of lines in array
+    LINE_COUNT=${#ARRAY_OF_LINES[@]}
+
+    echo $LINE_COUNT
+}
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │         Longest Line Count          │
+# │                                     │
+# └─────────────────────────────────────┘
+# source $SPINNAKER_TOOLS_FOLDER/utils/longest_text_line.sh
+# For a multi-line string (with possible emoji)
+# Calculate the length of the longest line.
+longest_line_length(){
+
+    TEXT_STRING=$1
+
+    # replace any '\n' (newlines) with ‰
+    STRING_ARRAY=${TEXT_STRING//'\n'/$'‰'}
+    STRING_ARRAY=${STRING_ARRAY//$'\n'/$'‰'}
+
+    # split by ‰ and make an array of each line
+    IFS=$'‰' read -r -a ARRAY_OF_LINES <<< "$STRING_ARRAY"
+
+    # reset LONGEST_LINE_LENGTH
+    LONGEST_LINE_LENGTH=0
+
+    # Find the longest line in array
+    # by iterating through it and checking if its longer
+    # than the previous longest line.
+    for CURRENT_LINE in "${ARRAY_OF_LINES[@]}"; do
+
+        # Count line length
+        LENGTH_OF_CURRENT_LINE=${#CURRENT_LINE}
+
+        # If there is a non-ascii character, Increase the line by + 1 for each
+        if [[ $CURRENT_LINE = *[![:ascii:]]* ]]; then
+        
+            # Substitute all emoji for another weird symbol
+            WEIRD_LINE="${CURRENT_LINE//[^[:ascii:]]/∑}"
+            
+            # Normal string without weird characters.
+            NO_EMOJI_LINE=${WEIRD_LINE//∑/}
+
+            # Length of normal string without weird characters
+            NO_EMOJI_LINE=${#NO_EMOJI_LINE}
+            
+            # Difference between full line and line without emoji.
+            LINE_EMOJI_COUNT=$(( $LENGTH_OF_CURRENT_LINE - $NO_EMOJI_LINE  ))
+
+            # Each emoji takes 2-characters, so double the number of characters
+            # for each emoji present.
+            LENGTH_OF_CURRENT_LINE=$(( $LENGTH_OF_CURRENT_LINE + $LINE_EMOJI_COUNT ))
+        fi
+
+        # If the length of line is biggest, set it.
+        if [[ $LENGTH_OF_CURRENT_LINE -gt $LONGEST_LINE_LENGTH ]]; then
+            LONGEST_LINE_LENGTH=$LENGTH_OF_CURRENT_LINE
+        fi
+
+        # printf "length: $LENGTH_OF_CURRENT_LINE line: $CURRENT_LINE\n"
+    done
+
+    # Override with Width if set.
+
+    if ! [ -z $BOX_W ]; then
+        LONGEST_LINE_LENGTH=$(( $BOX_W - 3 ))
+    fi
+
+    echo $LONGEST_LINE_LENGTH
+
+}
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │          Repeat characters          │
+# │                                     │
+# └─────────────────────────────────────┘
+# source $SPINNAKER_TOOLS_FOLDER/utils/repeat_characters.sh
+# Repeat a Character
+# $1 = character to repeat
+# $2 = number of times
+repeat_characters(){
+    for (( i = 0; i < $2; ++i )); do printf "$1"; done
+}
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │           Redefine Widths           │
+# │   (For any terminal size changes)   │
+# │                                     │
+# └─────────────────────────────────────┘
+# source $SPINNAKER_DEFINE_FOLDER/define_widths.sh
+define_widths(){
+    export declare W_FULL=$(tput cols)
+
+    export declare W_1_2=$((${W_FULL} / 2))
+
+    export declare W_1_3=$((${W_FULL} / 3))
+    export declare W_2_3=$(( (${W_FULL} / 3) * 2 ))
+
+    export declare W_1_4=$(( (${W_FULL} / 4) ))
+    export declare W_2_4=$(( (${W_FULL} / 4) * 2 ))
+    export declare W_3_4=$(( (${W_FULL} / 4) * 3 ))
+
+    export declare W_1_5=$((${W_FULL} / 5))
+    export declare W_2_5=$(( (${W_FULL} / 5) * 2 ))
+    export declare W_3_5=$(( (${W_FULL} / 5) * 3 ))
+    export declare W_4_5=$(( (${W_FULL} / 5) * 4 ))
+
+    export declare W_1_6=$((${W_FULL} / 6))
+    export declare W_2_6=$(( (${W_FULL} / 6) * 2 ))
+    export declare W_3_6=$(( (${W_FULL} / 6) * 3 ))
+    export declare W_4_6=$(( (${W_FULL} / 6) * 4 ))
+    export declare W_5_6=$(( (${W_FULL} / 6) * 5 ))
+}
+
+
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │          Redefine Heights           │
+# │   (For any terminal size changes)   │
+# │                                     │
+# └─────────────────────────────────────┘
+# source $SPINNAKER_DEFINE_FOLDER/define_heights.sh
+define_heights(){
+    export declare H_FULL=$(tput lines)
+
+    export declare H_1_2=$((${H_FULL} / 2))
+
+    export declare H_1_3=$((${H_FULL} / 3))
+    export declare H_2_3=$(( (${H_FULL} / 3) * 2 ))
+
+    export declare H_1_4=$(( (${H_FULL} / 4) ))
+    export declare H_2_4=$(( (${H_FULL} / 4) * 2 ))
+    export declare H_3_4=$(( (${H_FULL} / 4) * 3 ))
+
+    export declare H_1_5=$((${H_FULL} / 5))
+    export declare H_2_5=$(( (${H_FULL} / 5) * 2 ))
+    export declare H_3_5=$(( (${H_FULL} / 5) * 3 ))
+    export declare H_4_5=$(( (${H_FULL} / 5) * 4 ))
+
+    export declare H_1_6=$((${H_FULL} / 6))
+    export declare H_2_6=$(( (${H_FULL} / 6) * 2 ))
+    export declare H_3_6=$(( (${H_FULL} / 6) * 3 ))
+    export declare H_4_6=$(( (${H_FULL} / 6) * 4 ))
+    export declare H_5_6=$(( (${H_FULL} / 6) * 5 ))
+}
+
+
 
 # Create a box
 #
@@ -472,6 +635,7 @@ vertical_padding()
 
 }
 
+# Redefine heights / widths incase terminal has changed size.
 define_heights
 define_widths
 
