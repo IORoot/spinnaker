@@ -39,7 +39,7 @@ function options(){
         # Create the menu option
 
         # Create a box
-        BOX=$(./box.sh "TEXT_BLUE_500 BORDER_GREEN_300 PX_2 "  "${ICON_ROCKET}${LOOP_SELECT_TITLE}\n$LOOP_SELECT_DESCRIPTION")
+        BOX=$(./box.sh "${LOOP_SELECT_STYLE}"  "${ICON_ROCKET}${LOOP_SELECT_TITLE}\n$LOOP_SELECT_DESCRIPTION")
         VALUE=$( printf "$BOX" )
         SELECT_ARRAY+=("${VALUE}")
 
