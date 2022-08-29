@@ -103,7 +103,7 @@ function select_option {
     footer() { printf "FOOTER" }
 
     # initially print empty new lines (scroll down if at bottom of screen)
-    NEWLINE_COUNT=$(( ( $# * $HEIGHT ) ))
+    NEWLINE_COUNT=$(( ( $# * $HEIGHT ) + $FOOTER_HEIGHT ))
     for (( c=1; c<=$NEWLINE_COUNT; c++)) ; do printf "\n" ; done
 
     # determine current screen position for overwriting the options
