@@ -100,9 +100,10 @@ function options(){
     if $CLEAR_BEFORE_COMMAND_SCREEN; then clear; fi
     eval "${COMMAND}"
 
-    if $RESET_HELP; then
+    if $RESET_LOOP; then
         options $@
     fi
+
 }
 
 # Check is file is being passed

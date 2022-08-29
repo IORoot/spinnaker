@@ -1,17 +1,17 @@
 {
   "select": {
-    "clear": false,
+    "clear": true,
     "clear_before_command": true,
     "icon": "ICON_FADE_200",
     "hide_message": true,
     "display_help": true,
-    "reset_loop": true,
+    "reset_loop": false,
     "options": [
       {
         "title": "${ICON_ROCKET} Username",
         "title_style": "",
         "description": "Whoami",
-        "description_style": "TEXT_GRAY_500 BG_BLUE_900",
+        "description_style": "TEXT_GRAY_500",
         "command": "whoami",
         "sidebar_style": "BORDER_SKY_400"
       },
