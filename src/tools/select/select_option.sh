@@ -13,6 +13,7 @@
 function select_option {
     
     HEIGHT=3
+    FOOTER_HEIGHT=2
 
     # little helpers for terminal print control and key input
     ESC=$( printf "\033")                                                               # Escape sequence for ANSI control characters
@@ -98,6 +99,8 @@ function select_option {
                             if [[ $key = $ESC[A ]]; then echo up;    fi                 # If the UP key is pressed, echo up
                             if [[ $key = $ESC[B ]]; then echo down;  fi                 # If the DOWN key is pressed, echo down
                             if [[ $key = ""     ]]; then echo enter; fi; }              # If the any key is pressed, echo enter
+
+    footer() { printf "FOOTER" }
 
     # initially print empty new lines (scroll down if at bottom of screen)
     NEWLINE_COUNT=$(( ( $# * $HEIGHT ) ))
