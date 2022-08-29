@@ -16,8 +16,9 @@
 - [x] Icons (ICON_)             - Use unicode characters. 
 - [x] Lines (LINE_)             - Horizontal line of different widths (full, half, third, quarter, fifth, sixth, N-characters)
 - [x] Spinner (SPINNER_)        - Display a spinning progress indicator
-- [X] Padding (P_)              - Add space around element - [PT_, PR_, PB_, PL_] with N-characters
-- [ ] Select Options (SELECT_)  - Create tickboxs of multiple options of things to run
+- [x] Padding (P_)              - Add space around element - [PT_, PR_, PB_, PL_] with N-characters
+- [x] Select Options (SELECT_)  - Create tickboxs of multiple options of things to run
+- [ ] Alert (ALERT_)            - Display a pretty ALERT message.
 - [ ] Usage (USAGE)             - Display a pretty usage message.
 - [ ] Header (HEAD_)            - A header style for your app. Make it sticky or not.
 - [ ] Button (BUTTON_)          - Button for various actions. Confirm, cancel, submit, etc...

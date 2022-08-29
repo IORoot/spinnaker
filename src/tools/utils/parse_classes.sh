@@ -108,8 +108,15 @@ for CLASS in $CLASSES; do
         export declare "${PREFIX}_${PARAMETER}"=${!CLASS}
     fi
 
-
-
+    # ╭──────────────────────────╮
+    # │                          │
+    # │        TEXT ALIGN        │
+    # │                          │
+    # ╰──────────────────────────╯
+    # create new variable TEXT_COLOUR, BG_COLOUR, BORDER_COLOUR, etc...
+    if  [[ $PARAMETER == 'ALIGN' ]]; then
+        export declare "${PREFIX}_${PARAMETER}"=${!CLASS}
+    fi
 
 
     # Example way to print out a variable

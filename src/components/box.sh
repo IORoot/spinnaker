@@ -69,6 +69,9 @@ box()
     declare MULTI_PT_LINES=""
     declare MULTI_PB_LINES=""
 
+    # Text Align
+    declare "${PREFIX}_ALIGN"="LEFT"
+
     # Number of Text Lines
     declare LINE_COUNT=$(line_count "${TEXT_STRING}")
     # echo "LINE_COUNT:$LINE_COUNT"
@@ -224,7 +227,6 @@ text_lines()
     TEXT_STRING=$1
     TEXT_LINES=""
 
-
     # REPLACE NEWLINES
     #
     # replace any '\n' (newlines) with ‰
@@ -309,6 +311,8 @@ text_lines()
         # current longest line - minus current line text = space left
         # 
         local EXTRA_PR=$(( ${!TMP_LONGEST_LINE_LENGTH} - $LENGTH_OF_CURRENT_LINE ))
+        local HALF_EXTRA_PR=$(( $EXTRA_PR / 2 ))
+        local REMAINDER_EXTRA_PR=$(( $EXTRA_PR - $HALF_EXTRA_PR ))
         # printf "LONGEST LINE: ${!TMP_LONGEST_LINE_LENGTH} \n"
         # printf "PADDING RIGHT: ${EXTRA_PR} \n"
 
@@ -323,6 +327,8 @@ text_lines()
         # each line to be consistent width.
         #
         local LINE_EXTRA_PR=$(repeat_characters " " $EXTRA_PR )
+        local HALF_EXTRA_PR=$(repeat_characters " " $HALF_EXTRA_PR )
+        local REMAINDER_EXTRA_PR=$(repeat_characters " " $REMAINDER_EXTRA_PR )
         # printf "EXTRA PADDING RIGHT: |${LINE_EXTRA_PR}| \n"
 
 
@@ -343,9 +349,6 @@ text_lines()
         PL_SPACES=$(repeat_characters " " "${BOX_PL}")
         PX_SPACES=$(repeat_characters " " "${BOX_PX}")
 
-        
-
-        # printf "PADDING LEFT = |${!TMP_PL}|\n"
         # FULL LINE
         #
         # │░textbox here 123 🚀░░│
@@ -359,8 +362,25 @@ text_lines()
         TEXT_LINES="${TEXT_LINES}${PL_SPACES}"
             TEXT_LINES="${TEXT_LINES}${RESET_TEXT}"
             TEXT_LINES="${TEXT_LINES}${BOX_TEXT_COLOUR}"
+
+            if [[ "$BOX_ALIGN" == "RIGHT" ]];then
+                TEXT_LINES="${TEXT_LINES}${LINE_EXTRA_PR}"
+            fi
+
+            if [[ "$BOX_ALIGN" == "CENTER" ]];then
+                TEXT_LINES="${TEXT_LINES}${HALF_EXTRA_PR}"
+            fi
+
             TEXT_LINES="${TEXT_LINES}${CURRENT_LINE}"
-            TEXT_LINES="${TEXT_LINES}${LINE_EXTRA_PR}"
+            
+            if [[ "$BOX_ALIGN" == "LEFT" ]];then
+                TEXT_LINES="${TEXT_LINES}${LINE_EXTRA_PR}"
+            fi
+
+            if [[ "$BOX_ALIGN" == "CENTER" ]];then
+                TEXT_LINES="${TEXT_LINES}${REMAINDER_EXTRA_PR}"
+            fi
+
             TEXT_LINES="${TEXT_LINES}${RESET_TEXT}"
         TEXT_LINES="${TEXT_LINES}${BOX_BORDER_COLOUR}"
         TEXT_LINES="${TEXT_LINES}${PR_SPACES}"

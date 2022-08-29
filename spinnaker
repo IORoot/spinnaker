@@ -53,3 +53,4 @@ source $SPINNAKER_INSTALL_FOLDER/spacing.sh
 source $SPINNAKER_INSTALL_FOLDER/padding.sh
 source $SPINNAKER_INSTALL_FOLDER/edges.sh
 source $SPINNAKER_INSTALL_FOLDER/spinners.sh
+source $SPINNAKER_INSTALL_FOLDER/align.sh
