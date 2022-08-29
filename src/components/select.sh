@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ${SPINNAKER_TOOLS_FOLDER}/utils/json_values.sh
+source ${SPINNAKER_TOOLS_FOLDER}/select/select_option.sh
 PARSER="${SPINNAKER_TOOLS_FOLDER}/utils/parse_json.sh -l"
 
 function usage(){
@@ -9,104 +11,52 @@ function usage(){
     exit 1
 }
 
-#function to get value of specified key
-#returns empty string if not found
-#warning - does not validate key format (supplied as parameter) in any way, simply returns empty string for malformed queries too
-#usage: VAR=$(getkey foo.bar) #get value of "bar" contained within "foo"
-#       VAR=$(getkey foo[4].bar) #get value of "bar" contained in the array "foo" on position 4
-#       VAR=$(getkey [4].foo) #get value of "foo" contained in the root unnamed array on position 4
-function getkey {
-    #reformat key string (parameter) to what JSON.sh uses
-    KEYSTRING=$(sed -e 's/\[/\"\,/g' -e 's/^\"\,/\[/g' -e 's/\]\./\,\"/g' -e 's/\./\"\,\"/g' -e '/^\[/! s/^/\[\"/g' -e '/\]$/! s/$/\"\]/g' <<< "$@")
-    #extract the key value
-    FOUT=$(grep -F "$KEYSTRING" <<< "$JSON_PARSED")
-    FOUT="${FOUT#*$'\t'}"
-    FOUT="${FOUT#*\"}"
-    FOUT="${FOUT%\"*}"
-    echo "$FOUT"
-}
-
-#function returning length of array
-#returns zero if key in parameter does not exist or is not an array
-#usage: VAR=$(getarrlen foo.bar) #get length of array "bar" contained within "foo"
-#       VAR=$(getarrlen) #get length of the root unnamed array
-#       VAR=$(getarrlen [2].foo.bar) #get length of array "bar" contained within "foo", which is stored in the root unnamed array on position 2
-function getarrlen {
-    #reformat key string (parameter) to what JSON.sh uses
-    # KEYSTRING=$(sed -e '/^\[/! s/\[/\"\,/g' -e 's/\]\./\,\"/g' -e 's/\./\"\,\"/g' -e '/^$/! {/^\[/! s/^/\[\"/g}' -e '/^$/! s/$/\"\,/g' -e 's/\[/\\\[/g' -e 's/\]/\\\]/g' -e 's/\,/\\\,/g' -e '/^$/ s/^/\\\[/g' <<< "$@")
-    KEYSTRING=$(sed -e '/^\[/! s/\[/\"\,/g' -e 's/\]\./\,\"/g' -e 's/\./\"\,\"/g' -e '#^$#! {/^\[/! s/^/\[\"/g}' -e '/^$/! s/$/\"\,/g' -e 's/\[/\\\[/g' -e 's/\]/\\\]/g' -e 's/\,/\\\,/g' -e '/^$/ s/^/\\\[/g' <<< "$@")
-    #extract the key array length - get last index
-    LEN=$(grep -o "${KEYSTRING}[0-9]*" <<< "$JSON_PARSED" | tail -n -1 | grep -o "[0-9]*$")
-    #increment to get length, if empty => zero
-    if [ -n "$LEN" ]; then
-        LEN=$(($LEN+1))
-    else
-        LEN="0"
-    fi
-    echo "$LEN"
-}
-
-
 
 function options(){
 
+    # Take first arg as Config file
     CONFIG_FILE=$1
 
+    # Run file through the parser
     JSON_PARSED=$($PARSER < $CONFIG_FILE)
 
+    # Store the length of select array
     JSON_SELECT_LENGTH=$(getarrlen select)
 
-
+    SELECT_ARRAY=()
+    # Loop through select object to get each array
     for (( LOOP=0; LOOP<${JSON_SELECT_LENGTH}; LOOP++ ))
     do 
-        LOOP_SELECT_TITLE=$(getkey select[$LOOP].title)
-        LOOP_SELECT_DESCRIPTION=$(getkey select[$LOOP].description)
-        LOOP_SELECT_STYLE=$(getkey select[$LOOP].style)
-        LOOP_SELECT_COMMAND=$(getkey select[$LOOP].command)
-        COMMAND=${LOOP_SELECT_COMMAND//\\/}
-        
-        echo "title: ${LOOP_SELECT_TITLE}"
-        echo "description: ${LOOP_SELECT_DESCRIPTION}"
-        echo "style: ${LOOP_SELECT_STYLE}"
-        echo "command: ${LOOP_SELECT_COMMAND}"
-        echo "running:"
-        eval "${COMMAND}"
-        echo "---"
-        
+
+        # Create the variables
+        declare LOOP_SELECT_INDEX=$LOOP
+        declare LOOP_SELECT_TITLE=$(getkey select[$LOOP].title)
+        declare LOOP_SELECT_DESCRIPTION=$(getkey select[$LOOP].description)
+        declare LOOP_SELECT_STYLE=$(getkey select[$LOOP].style)
+        declare LOOP_SELECT_COMMAND=$(getkey select[$LOOP].command)
+        LOOP_SELECT_COMMAND=${LOOP_SELECT_COMMAND//\\/}  # Remove the forward escape slashes in the command field
+
+        # Create the menu option
+
+        # Create a box
+        BOX=$(./box.sh "TEXT_BLUE_500 BORDER_GREEN_300 PX_2 "  "${ICON_ROCKET}${LOOP_SELECT_TITLE}\n$LOOP_SELECT_DESCRIPTION")
+        VALUE=$( printf "$BOX" )
+        SELECT_ARRAY+=("${VALUE}")
+
+        # Create environment variables of results
+        declare SELECT_ARRAY_INDEX_$LOOP="${LOOP_SELECT_INDEX}"
+        declare SELECT_ARRAY_TITLE_$LOOP="${LOOP_SELECT_TITLE}"
+        declare SELECT_ARRAY_DESCRIPTION_$LOOP="${LOOP_SELECT_DESCRIPTION}"
+        declare SELECT_ARRAY_STYLE_$LOOP="${LOOP_SELECT_STYLE}"
+        declare SELECT_ARRAY_COMMAND_$LOOP="${LOOP_SELECT_COMMAND}"
 
     done
 
 
-    # for JSONLINE in $JSON; do
-    #     echo "LINE: ${JSONLINE}"
-    # done
+    select_option "${SELECT_ARRAY[@]}"
+    choice=$?
 
-    # # Configure the shell prompt PS3 variable to ask for a choice.
-    # PS3='Please enter your choice: '
-
-    # # Create an Array of choices
-    # options=("Option 1" "Option 2" "Option 3" "Quit")
-
-    # # Parse array
-    # select opt in "${options[@]}"
-    # do
-    #     case $opt in
-    #         "Option 1")
-    #             echo "you chose choice 1"
-    #             ;;
-    #         "Option 2")
-    #             echo "you chose choice 2"
-    #             ;;
-    #         "Option 3")
-    #             echo "you chose choice $REPLY which is $opt"
-    #             ;;
-    #         "Quit")
-    #             break
-    #             ;;
-    #         *) echo "invalid option $REPLY";;
-    #     esac
-    # done
-
+    echo "Choosen index = $choice"
 }
 
 # Check is file is being passed
