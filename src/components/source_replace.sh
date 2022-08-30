@@ -39,20 +39,15 @@ function substitute_source()
             # Remove the #!/bin/bash line
             contents="${contents//\#\!\/bin\/bash/}" 
 
-            # printf "%s" "$contents"
-
             # Comment out the source line
-            # echo "# ${line}" >> $TARGET
             printf "#%s\n" "$line" >> $TARGET
 
             # echo everything else to file
-            # echo "${contents}" >> $TARGET
             printf "%s" "$contents" >> $TARGET
 
         # echo everything else.
         else
             printf "%s\n" "$line" >> $TARGET
-            # echo "$line" >> $TARGET
         fi
 
     done < "$SOURCE"
