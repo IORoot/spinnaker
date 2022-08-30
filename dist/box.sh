@@ -5,16 +5,93 @@
 # │             Line Count              │
 # │                                     │
 # └─────────────────────────────────────┘
-source $SPINNAKER_TOOLS_FOLDER/utils/line_count.sh
+#source $SPINNAKER_TOOLS_FOLDER/utils/line_count.sh
+line_count(){
 
+    TEXT_STRING=$1
+
+    # replace any '\n' (newlines) with ‰
+    local STRING_ARRAY=${TEXT_STRING//'\n'/$'‰'}
+    local STRING_ARRAY=${STRING_ARRAY//$'\n'/$'‰'}
+    
+    # split by ‰ and make an array of each line
+    IFS=$'‰' read -r -a ARRAY_OF_LINES <<< "$STRING_ARRAY"
+
+    # Number of lines in array
+    LINE_COUNT=${#ARRAY_OF_LINES[@]}
+
+    echo $LINE_COUNT
+}
 
 # ┌─────────────────────────────────────┐
 # │                                     │
 # │         Longest Line Count          │
 # │                                     │
 # └─────────────────────────────────────┘
-source $SPINNAKER_TOOLS_FOLDER/utils/longest_text_line.sh
+#source $SPINNAKER_TOOLS_FOLDER/utils/longest_text_line.sh
 
+
+# For a multi-line string (with possible emoji)
+# Calculate the length of the longest line.
+longest_line_length(){
+
+    TEXT_STRING=$1
+
+    # replace any '\n' (newlines) with ‰
+    STRING_ARRAY=${TEXT_STRING//'\n'/$'‰'}
+    STRING_ARRAY=${STRING_ARRAY//$'\n'/$'‰'}
+
+    # split by ‰ and make an array of each line
+    IFS=$'‰' read -r -a ARRAY_OF_LINES <<< "$STRING_ARRAY"
+
+    # reset LONGEST_LINE_LENGTH
+    LONGEST_LINE_LENGTH=0
+
+    # Find the longest line in array
+    # by iterating through it and checking if its longer
+    # than the previous longest line.
+    for CURRENT_LINE in "${ARRAY_OF_LINES[@]}"; do
+
+        # Count line length
+        LENGTH_OF_CURRENT_LINE=${#CURRENT_LINE}
+
+        # If there is a non-ascii character, Increase the line by + 1 for each
+        if [[ $CURRENT_LINE = *[![:ascii:]]* ]]; then
+        
+            # Substitute all emoji for another weird symbol
+            WEIRD_LINE="${CURRENT_LINE//[^[:ascii:]]/∑}"
+            
+            # Normal string without weird characters.
+            NO_EMOJI_LINE=${WEIRD_LINE//∑/}
+
+            # Length of normal string without weird characters
+            NO_EMOJI_LINE=${#NO_EMOJI_LINE}
+            
+            # Difference between full line and line without emoji.
+            LINE_EMOJI_COUNT=$(( $LENGTH_OF_CURRENT_LINE - $NO_EMOJI_LINE  ))
+
+            # Each emoji takes 2-characters, so double the number of characters
+            # for each emoji present.
+            LENGTH_OF_CURRENT_LINE=$(( $LENGTH_OF_CURRENT_LINE + $LINE_EMOJI_COUNT ))
+        fi
+
+        # If the length of line is biggest, set it.
+        if [[ $LENGTH_OF_CURRENT_LINE -gt $LONGEST_LINE_LENGTH ]]; then
+            LONGEST_LINE_LENGTH=$LENGTH_OF_CURRENT_LINE
+        fi
+
+        # printf "length: $LENGTH_OF_CURRENT_LINE line: $CURRENT_LINE\n"
+    done
+
+    # Override with Width if set.
+
+    if ! [ -z $BOX_W ]; then
+        LONGEST_LINE_LENGTH=$(( $BOX_W - 3 ))
+    fi
+
+    echo $LONGEST_LINE_LENGTH
+
+}
 
 # ┌─────────────────────────────────────┐
 # │                                     │
@@ -171,8 +248,136 @@ box()
     # by setting them to supplied user values.
     #
     # @return $PREFIX_VARIABLE
-    source $SPINNAKER_TOOLS_FOLDER/utils/parse_classes.sh "${PREFIX}" "${CLASSES}"
+#    source $SPINNAKER_TOOLS_FOLDER/utils/parse_classes.sh "${PREFIX}" "${CLASSES}"
 
+
+
+# Parses a class list string
+# Returns an array of keys and values
+# 
+# e.g. 
+# takes two parameters:
+# 1. A prefix name "BOX"
+# 2. A single string "TEXT_RED_400 BG_EMERALD_100 BORDER_BLUE_800 PX_4 PT_4 EDGE_FINE EDGE_DUAL_B EDGE_DUAL_L EDGE_DUAL_BL"
+# 
+# The function then sets the global variables:
+# BOX_TEXT_COLOUR=TEXT_RED_400
+# BOX_BG_COLOUR=BG_EMERALD_100
+# BOX_BORDER_COLOUR=BORDER_BLUE_800
+# BOX_PX=PX_4
+# BOX_PT=PT_4
+# BOX_EDGE=EDGE_FINE
+# BOX_EDGE_B=EDGE_DUAL_B
+# BOX_EDGE_L=EDGE_DUAL_L
+# BOX_EDGE_BL=EDGE_DUAL_BL
+#
+# These are then used within the original function to override any defaults.
+#
+
+
+# Name to prefix all variable names with
+PREFIX=$1
+
+
+# String of class names
+CLASSES=$2
+# set inter-field separator (IFS) to a space and loop
+# through each class name and create a CLASS variable
+# The class will be something like "TEXT_GREEN_100"
+export IFS=" "
+for CLASS in $CLASSES; do
+
+    # Split by underscores and assign each part to a variable
+    IFS="_" read PARAMETER PRIMARY SECONDARY <<< "$CLASS"
+
+    # ╭──────────────────────────╮
+    # │                          │
+    # │        🎨 COLOURS        │
+    # │                          │
+    # ╰──────────────────────────╯
+    # create new variable TEXT_COLOUR, BG_COLOUR, BORDER_COLOUR, etc...
+    if  [[ $PARAMETER == 'TEXT' ]] || 
+        [[ $PARAMETER == 'BG' ]] || 
+        [[ $PARAMETER == 'BORDER' ]]; then
+
+        export declare "${PREFIX}_${PARAMETER}_COLOUR"=${!CLASS}
+    fi
+
+
+    # ╭──────────────────────────╮
+    # │                          │
+    # │        ⬛ PADDING        │
+    # │                          │
+    # ╰──────────────────────────╯
+    if  [[ $PARAMETER == PX* ]] || 
+        [[ $PARAMETER == PY* ]] || 
+        [[ $PARAMETER == PT* ]] || 
+        [[ $PARAMETER == PR* ]] || 
+        [[ $PARAMETER == PB* ]] || 
+        [[ $PARAMETER == PL* ]]; then
+
+        export declare "${PREFIX}_$PARAMETER"=${!CLASS}
+    fi 
+    
+
+    # ╭───────────────────────╮
+    # │                       │
+    # │        🚀 EDGE        │
+    # │                       │
+    # ╰───────────────────────╯
+    # If this is a "EDGE_DUAL" or "EDGE_FINE", it doesn't have $SECONDARY set.
+    # So set all or the edges to the same thickness.
+    if  [[ $PARAMETER == EDGE* ]] && [[ $SECONDARY == "" ]] ; then
+        VAR="${PARAMETER}_${PRIMARY}_TL"; export declare "${PREFIX}_${PARAMETER}_TL"=${!VAR}
+        VAR="${PARAMETER}_${PRIMARY}_T";  export declare "${PREFIX}_${PARAMETER}_T"=${!VAR}
+        VAR="${PARAMETER}_${PRIMARY}_TR"; export declare "${PREFIX}_${PARAMETER}_TR"=${!VAR}
+        VAR="${PARAMETER}_${PRIMARY}_R";  export declare "${PREFIX}_${PARAMETER}_R"=${!VAR}
+        VAR="${PARAMETER}_${PRIMARY}_BR"; export declare "${PREFIX}_${PARAMETER}_BR"=${!VAR}
+        VAR="${PARAMETER}_${PRIMARY}_B";  export declare "${PREFIX}_${PARAMETER}_B"=${!VAR}
+        VAR="${PARAMETER}_${PRIMARY}_BL"; export declare "${PREFIX}_${PARAMETER}_BL"=${!VAR}
+        VAR="${PARAMETER}_${PRIMARY}_L";  export declare "${PREFIX}_${PARAMETER}_L"=${!VAR}
+    fi 
+
+    # If it DOES have $SECONDARY set, it'll be something like "EDGE_WIDE_B"
+    # Define the variable name to equal the class with a prefix. "BOX_EDGE_FINE_TL"
+    if [[ $PARAMETER == EDGE* ]] && ! [[ $SECONDARY == "" ]] ; then
+        VAR="${CLASS}"; export declare "${PREFIX}_${PARAMETER}_${SECONDARY}"=${!VAR}
+    fi
+
+    # ╭──────────────────────────╮
+    # │                          │
+    # │         → WIDTHS         │
+    # │         ↑ HEIGHTS        │
+    # │                          │
+    # ╰──────────────────────────╯
+    # create new variable W_, etc...
+    if  [[ $PARAMETER == 'W' ]]; then
+        export declare "${PREFIX}_${PARAMETER}"=${!CLASS}
+    fi    
+    
+    if  [[ $PARAMETER == 'H' ]]; then
+        export declare "${PREFIX}_${PARAMETER}"=${!CLASS}
+    fi
+
+    # ╭──────────────────────────╮
+    # │                          │
+    # │        TEXT ALIGN        │
+    # │                          │
+    # ╰──────────────────────────╯
+    # create new variable TEXT_COLOUR, BG_COLOUR, BORDER_COLOUR, etc...
+    if  [[ $PARAMETER == 'ALIGN' ]]; then
+        export declare "${PREFIX}_${PARAMETER}"=${!CLASS}
+    fi
+
+
+    # Example way to print out a variable
+    # DYNAMIC_VARIABLE_NAME="${PREFIX}_${CLASS}"
+    # printf "${DYNAMIC_VARIABLE_NAME} VALUE: ${!DYNAMIC_VARIABLE_NAME} \n"
+    # DYNAMIC_VARIABLE_NAME="${PREFIX}_${PARAMETER}_COLOUR"
+    # printf "${DYNAMIC_VARIABLE_NAME} COLOUR: ${!DYNAMIC_VARIABLE_NAME} colour ${RESET_ALL}\n"
+
+
+done
 
     # LONGEST LINE
     #
@@ -193,7 +398,7 @@ box()
     local TMP_PR="${PREFIX}_PR"
     declare "${PREFIX}_WIDTH"=$(( ${!TMP_PL} + ${!TMP_PX} + ${!TMP_LONGEST_LINE_LENGTH} + ${!TMP_PX} + ${!TMP_PR} ))
     local TMP_WIDTH="${PREFIX}_WIDTH"
-    # printf "BOX_WIDTH=$BOX_WIDTH\n"
+    # printf "BOX_WIDTH=$BOX_WIDTHn"
 
 
     # HORIZONTAL BARS
@@ -202,9 +407,9 @@ box()
     # ───────────────────── ─────────────────────
     declare "${PREFIX}_EDGE_T"=$(repeat_characters ${!TMP_EDGE_T} ${!TMP_WIDTH})
     declare "${PREFIX}_EDGE_B"=$(repeat_characters ${!TMP_EDGE_B} ${!TMP_WIDTH})
-    # printf "TMP_EDGE_T: ${!TMP_EDGE_T}\n"
-    # printf "TMP_EDGE_B: ${!TMP_EDGE_B}\n"
-    # printf "TMP_WIDTH: ${!TMP_WIDTH}\n"
+    # printf "TMP_EDGE_T: ${!TMP_EDGE_T}n"
+    # printf "TMP_EDGE_B: ${!TMP_EDGE_B}n"
+    # printf "TMP_WIDTH: ${!TMP_WIDTH}n"
 
 
     # Y-PADDING
@@ -260,7 +465,7 @@ create_box()
     BOX="${BOX}${BOX_EDGE_TL}"
     BOX="${BOX}${BOX_EDGE_T}"
     BOX="${BOX}${BOX_EDGE_TR}"
-    BOX="${BOX}\n"
+    BOX="${BOX}n"
 
     # Vertical padding lines
     # │                  │
@@ -288,7 +493,7 @@ create_box()
     BOX="${BOX}${RESET_ALL}"
 
     # Print the output box
-    printf "${BOX}\n"
+    printf "${BOX}n"
 
 }
 
@@ -317,9 +522,9 @@ text_lines()
 
     # REPLACE NEWLINES
     #
-    # replace any '\n' (newlines) with ‰
-    STRING_ARRAY=${TEXT_STRING//'\n'/$'‰'}
-    STRING_ARRAY=${STRING_ARRAY//$'\n'/$'‰'}
+    # replace any 'n' (newlines) with ‰
+    STRING_ARRAY=${TEXT_STRING//'n'/$'‰'}
+    STRING_ARRAY=${STRING_ARRAY//$'n'/$'‰'}
 
 
     # SPLIT INTO ARRAY
@@ -388,7 +593,7 @@ text_lines()
             local LENGTH_OF_CURRENT_LINE=$(( $LENGTH_OF_CURRENT_LINE + $LINE_EMOJI_COUNT ))
         fi
         # printf "(after emoji adjustment) : $LENGTH_OF_CURRENT_LINE. "
-        # printf "LINE_EMOJI_COUNT: ${LINE_EMOJI_COUNT} \n"
+        # printf "LINE_EMOJI_COUNT: ${LINE_EMOJI_COUNT} n"
 
 
 
@@ -401,8 +606,8 @@ text_lines()
         local EXTRA_PR=$(( ${!TMP_LONGEST_LINE_LENGTH} - $LENGTH_OF_CURRENT_LINE ))
         local HALF_EXTRA_PR=$(( $EXTRA_PR / 2 ))
         local REMAINDER_EXTRA_PR=$(( $EXTRA_PR - $HALF_EXTRA_PR ))
-        # printf "LONGEST LINE: ${!TMP_LONGEST_LINE_LENGTH} \n"
-        # printf "PADDING RIGHT: ${EXTRA_PR} \n"
+        # printf "LONGEST LINE: ${!TMP_LONGEST_LINE_LENGTH} n"
+        # printf "PADDING RIGHT: ${EXTRA_PR} n"
 
 
         # LINE-PADDING 
@@ -417,7 +622,7 @@ text_lines()
         local LINE_EXTRA_PR=$(repeat_characters " " $EXTRA_PR )
         local HALF_EXTRA_PR=$(repeat_characters " " $HALF_EXTRA_PR )
         local REMAINDER_EXTRA_PR=$(repeat_characters " " $REMAINDER_EXTRA_PR )
-        # printf "EXTRA PADDING RIGHT: |${LINE_EXTRA_PR}| \n"
+        # printf "EXTRA PADDING RIGHT: |${LINE_EXTRA_PR}| n"
 
 
         # X-PADDING
@@ -430,9 +635,9 @@ text_lines()
         # not using PREFIX
         #
         # Create the [X, Right and Lef] horizontal padding 
-        # printf "BOX_PR: |${BOX_PR}|\n"
-        # printf "BOX_PL: |${BOX_PL}|\n"
-        # printf "BOX_PX: |${BOX_PX}|\n"
+        # printf "BOX_PR: |${BOX_PR}|n"
+        # printf "BOX_PL: |${BOX_PL}|n"
+        # printf "BOX_PX: |${BOX_PX}|n"
         PR_SPACES=$(repeat_characters " " "${BOX_PR}")
         PL_SPACES=$(repeat_characters " " "${BOX_PL}")
         PX_SPACES=$(repeat_characters " " "${BOX_PX}")
@@ -475,7 +680,7 @@ text_lines()
         TEXT_LINES="${TEXT_LINES}${PX_SPACES}"
         TEXT_LINES="${TEXT_LINES}${BOX_EDGE_R}"
         TEXT_LINES="${TEXT_LINES}${RESET_BG}"
-        TEXT_LINES="${TEXT_LINES}\n"
+        TEXT_LINES="${TEXT_LINES}n"
         
         # printf "${TEXT_LINES}"
     done
@@ -502,16 +707,16 @@ vertical_padding()
     # Create the [Y, Top, Bottom] empty space for vertical padding 
     # ░░░░░░░░░░░░░░░░
     declare TMP_VERTICAL=$(repeat_characters " " ${!TMP_WIDTH})
-    #printf "TMP_VERTICAL: |${TMP_VERTICAL}|\n"
+    #printf "TMP_VERTICAL: |${TMP_VERTICAL}|n"
 
 
     # Y-PADDING LINE + EDGES
     #
     # Create the vertical spacer padding line with edges
     # │░░░░░░░░░░░░░░░░│
-    declare "${PREFIX}_VERTICAL_LINE"="${!TMP_BG_COLOUR}${!TMP_EDGE_L}${TMP_VERTICAL}${!TMP_EDGE_R}${RESET_BG} \n"
+    declare "${PREFIX}_VERTICAL_LINE"="${!TMP_BG_COLOUR}${!TMP_EDGE_L}${TMP_VERTICAL}${!TMP_EDGE_R}${RESET_BG} n"
     local TMP_VERTICAL_LINE="${PREFIX}_VERTICAL_LINE"
-    # printf "TMP_VERTICAL_LINE: ${!TMP_VERTICAL_LINE}\n"
+    # printf "TMP_VERTICAL_LINE: ${!TMP_VERTICAL_LINE}n"
 
 
     # Override with HEIGHT setting
@@ -529,9 +734,9 @@ vertical_padding()
     # │░░░░░░░░░░░░░░░░│
     if ! [ ${!TMP_PY} -eq "0" ]; then
         MULTI_PY_LINES=$(repeat_characters "${BOX_VERTICAL_LINE}" $BOX_PY )
-        MULTI_PY_LINES="$MULTI_PY_LINES\n"
+        MULTI_PY_LINES="$MULTI_PY_LINESn"
     fi
-    # printf "MULTI_PY_LINES:\n$MULTI_PY_LINES"
+    # printf "MULTI_PY_LINES:n$MULTI_PY_LINES"
 
 
     # TOP Y-PADDING LINES
@@ -541,9 +746,9 @@ vertical_padding()
     # │░░░░░░░░░░░░░░░░│
     if ! [ ${!TMP_PT} -eq "0" ]; then
         MULTI_PT_LINES=$(repeat_characters "${BOX_VERTICAL_LINE}" $BOX_PT )
-        MULTI_PT_LINES="$MULTI_PT_LINES\n"
+        MULTI_PT_LINES="$MULTI_PT_LINESn"
     fi
-    # printf "\nMULTI_PT_LINES:\n$MULTI_PT_LINES"
+    # printf "nMULTI_PT_LINES:n$MULTI_PT_LINES"
 
 
     # BOTTOM Y-PADDING LINES
@@ -553,9 +758,9 @@ vertical_padding()
     # │░░░░░░░░░░░░░░░░│
     if ! [ ${!TMP_PB} -eq "0" ]; then
         MULTI_PB_LINES=$(repeat_characters "${BOX_VERTICAL_LINE}" $BOX_PB )
-        MULTI_PB_LINES="$MULTI_PB_LINES\n"
+        MULTI_PB_LINES="$MULTI_PB_LINESn"
     fi
-    # printf "\nMULTI_PB_LINES:\n$MULTI_PB_LINES"
+    # printf "nMULTI_PB_LINES:n$MULTI_PB_LINES"
     
 
 }
@@ -570,9 +775,8 @@ if [ "$#" -eq 1 ]; then
 fi
 
 if [ "$#" -ne 2 ]; then
-    printf "${TEXT_RED_500}Illegal number of parameters\n"
-    printf "${TEXT_GREEN_500}usage: ${TEXT_GRAY_200}$0 ${TEXT_SKY_500}[\"classes\"] \"String\"\n"
+    printf "${TEXT_RED_500}Illegal number of parametersn"
+    printf "${TEXT_GREEN_500}usage: ${TEXT_GRAY_200}$0 ${TEXT_SKY_500}["classes"] "String"n"
     exit 1
 fi
 
-box "$@"
