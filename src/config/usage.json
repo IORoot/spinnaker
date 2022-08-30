@@ -1,0 +1,49 @@
+{
+    "usage": {
+        "title": { 
+            "type":     "paragraph",
+            "detail":   "This is the command.",
+            "styles":   "TEXT_GREY_500"
+        },
+        "details": { 
+            "type":     "paragraph",
+            "detail":   "Easy to configure selection list.",
+            "styles":   "TEXT_GREY_500"
+        },
+        "options": { 
+            "type":     "table",
+            "style":    "BG_SKY_900",
+            "widths":   [ 10, 20, null ],
+            "rows": [
+                {
+                    "flag":  "h",
+                    "word":  "help",
+                    "info":  "Show usage message",
+                    "style": ""
+                },
+                {
+                    "flag":  "v",
+                    "word":  "verbose",
+                    "info":  "Show verbose output",
+                    "style": ""
+                }
+            ]
+
+        },
+        "explanation": { 
+            "type":     "paragraph",
+            "detail":   "Example help usage:\n Use the -h for help.",
+            "styles":   "TEXT_GREY_500"
+        },
+        "example": { 
+            "type":     "paragraph",
+            "detail":   "Example help usage:\n Use the -h for help.",
+            "styles":   "TEXT_GREY_500"
+        },
+        "footer": { 
+            "type":     "paragraph",
+            "detail":   "Written by Andy Pearson.",
+            "styles":   "TEXT_GREY_500"
+        }
+    }
+}

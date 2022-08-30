@@ -7,7 +7,6 @@
 - [lipgloss](https://github.com/charmbracelet/lipgloss)
 
 
-
 ## ToDo
 
 - [x] Text Colours (TEXT_)      - Change text colours (tailwind colours)
@@ -18,7 +17,8 @@
 - [x] Spinner (SPINNER_)        - Display a spinning progress indicator
 - [x] Padding (P_)              - Add space around element - [PT_, PR_, PB_, PL_] with N-characters
 - [x] Select Options (SELECT_)  - Create tickboxs of multiple options of things to run
-- [ ] Alert (ALERT_)            - Display a pretty ALERT message.
+- [x] Standalone                - Replace all 'source' commands with contents of files.
+- [x] Alert (ALERT_)            - Display a pretty ALERT message.
 - [ ] Usage (USAGE)             - Display a pretty usage message.
 - [ ] Header (HEAD_)            - A header style for your app. Make it sticky or not.
 - [ ] Button (BUTTON_)          - Button for various actions. Confirm, cancel, submit, etc...

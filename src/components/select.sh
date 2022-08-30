@@ -7,6 +7,7 @@
 # └─────────────────────────────────────┘
 source $SPINNAKER_TOOLS_FOLDER/utils/json_get_key.sh
 
+
 # ┌─────────────────────────────────────┐
 # │                                     │
 # │      JSON Get length of array       │
