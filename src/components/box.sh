@@ -21,13 +21,8 @@ source $SPINNAKER_TOOLS_FOLDER/utils/longest_text_line.sh
 # │          Repeat characters          │
 # │                                     │
 # └─────────────────────────────────────┘
-# source $SPINNAKER_TOOLS_FOLDER/utils/repeat_characters.sh
-# Repeat a Character
-# $1 = character to repeat
-# $2 = number of times
-repeat_characters(){
-    for (( i = 0; i < $2; ++i )); do printf "$1"; done
-}
+source $SPINNAKER_TOOLS_FOLDER/utils/repeat_characters.sh
+
 
 # ┌─────────────────────────────────────┐
 # │                                     │
@@ -35,31 +30,7 @@ repeat_characters(){
 # │   (For any terminal size changes)   │
 # │                                     │
 # └─────────────────────────────────────┘
-# source $SPINNAKER_DEFINE_FOLDER/define_widths.sh
-define_widths(){
-    export declare W_FULL=$(tput cols)
-
-    export declare W_1_2=$((${W_FULL} / 2))
-
-    export declare W_1_3=$((${W_FULL} / 3))
-    export declare W_2_3=$(( (${W_FULL} / 3) * 2 ))
-
-    export declare W_1_4=$(( (${W_FULL} / 4) ))
-    export declare W_2_4=$(( (${W_FULL} / 4) * 2 ))
-    export declare W_3_4=$(( (${W_FULL} / 4) * 3 ))
-
-    export declare W_1_5=$((${W_FULL} / 5))
-    export declare W_2_5=$(( (${W_FULL} / 5) * 2 ))
-    export declare W_3_5=$(( (${W_FULL} / 5) * 3 ))
-    export declare W_4_5=$(( (${W_FULL} / 5) * 4 ))
-
-    export declare W_1_6=$((${W_FULL} / 6))
-    export declare W_2_6=$(( (${W_FULL} / 6) * 2 ))
-    export declare W_3_6=$(( (${W_FULL} / 6) * 3 ))
-    export declare W_4_6=$(( (${W_FULL} / 6) * 4 ))
-    export declare W_5_6=$(( (${W_FULL} / 6) * 5 ))
-}
-
+source $SPINNAKER_DEFINE_FOLDER/define_widths.sh
 
 
 # ┌─────────────────────────────────────┐
@@ -68,31 +39,39 @@ define_widths(){
 # │   (For any terminal size changes)   │
 # │                                     │
 # └─────────────────────────────────────┘
-# source $SPINNAKER_DEFINE_FOLDER/define_heights.sh
-define_heights(){
-    export declare H_FULL=$(tput lines)
+source $SPINNAKER_DEFINE_FOLDER/define_heights.sh
 
-    export declare H_1_2=$((${H_FULL} / 2))
 
-    export declare H_1_3=$((${H_FULL} / 3))
-    export declare H_2_3=$(( (${H_FULL} / 3) * 2 ))
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │             Create Box              │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/box/create_box.sh
 
-    export declare H_1_4=$(( (${H_FULL} / 4) ))
-    export declare H_2_4=$(( (${H_FULL} / 4) * 2 ))
-    export declare H_3_4=$(( (${H_FULL} / 4) * 3 ))
 
-    export declare H_1_5=$((${H_FULL} / 5))
-    export declare H_2_5=$(( (${H_FULL} / 5) * 2 ))
-    export declare H_3_5=$(( (${H_FULL} / 5) * 3 ))
-    export declare H_4_5=$(( (${H_FULL} / 5) * 4 ))
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │             Text Lines              │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/box/text_lines.sh
 
-    export declare H_1_6=$((${H_FULL} / 6))
-    export declare H_2_6=$(( (${H_FULL} / 6) * 2 ))
-    export declare H_3_6=$(( (${H_FULL} / 6) * 3 ))
-    export declare H_4_6=$(( (${H_FULL} / 6) * 4 ))
-    export declare H_5_6=$(( (${H_FULL} / 6) * 5 ))
-}
 
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │          Vertical Padding           │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/box/vertical_padding.sh
+
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │            Parse Classes            │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/utils/parse_classes_func.sh
 
 
 # Create a box
@@ -171,7 +150,7 @@ box()
     # by setting them to supplied user values.
     #
     # @return $PREFIX_VARIABLE
-    source $SPINNAKER_TOOLS_FOLDER/utils/parse_classes.sh "${PREFIX}" "${CLASSES}"
+    parse_classes "${PREFIX}" "${CLASSES}"
 
 
     # LONGEST LINE
@@ -193,7 +172,6 @@ box()
     local TMP_PR="${PREFIX}_PR"
     declare "${PREFIX}_WIDTH"=$(( ${!TMP_PL} + ${!TMP_PX} + ${!TMP_LONGEST_LINE_LENGTH} + ${!TMP_PX} + ${!TMP_PR} ))
     local TMP_WIDTH="${PREFIX}_WIDTH"
-    # printf "BOX_WIDTH=$BOX_WIDTH\n"
 
 
     # HORIZONTAL BARS
@@ -202,9 +180,6 @@ box()
     # ───────────────────── ─────────────────────
     declare "${PREFIX}_EDGE_T"=$(repeat_characters ${!TMP_EDGE_T} ${!TMP_WIDTH})
     declare "${PREFIX}_EDGE_B"=$(repeat_characters ${!TMP_EDGE_B} ${!TMP_WIDTH})
-    # printf "TMP_EDGE_T: ${!TMP_EDGE_T}\n"
-    # printf "TMP_EDGE_B: ${!TMP_EDGE_B}\n"
-    # printf "TMP_WIDTH: ${!TMP_WIDTH}\n"
 
 
     # Y-PADDING
@@ -241,325 +216,6 @@ box()
 }
 
 
-
-# CREATE THE BOX!
-#
-# Puts all parts together.
-create_box()
-{
-
-    # Create the output box
-    BOX=""
-
-    # Set background colour
-    BOX="${BOX}${BOX_BG_COLOUR}"
-
-    # Top line
-    # ╭──────────────────╮
-    BOX="${BOX}${BOX_BORDER_COLOUR}"
-    BOX="${BOX}${BOX_EDGE_TL}"
-    BOX="${BOX}${BOX_EDGE_T}"
-    BOX="${BOX}${BOX_EDGE_TR}"
-    BOX="${BOX}\n"
-
-    # Vertical padding lines
-    # │                  │
-    BOX="${BOX}${MULTI_PT_LINES}"
-    BOX="${BOX}${MULTI_PY_LINES}"
-
-    # Text Line
-    # │ textbox here 123 │
-    BOX="${BOX}${TEXT_LINES}"
-
-    # Vertical padding lines
-    # │                  │
-    BOX="${BOX}${MULTI_PY_LINES}"
-    BOX="${BOX}${MULTI_PB_LINES}"
-
-    # Bottom line
-    # ╰──────────────────╯
-    BOX="${BOX}${BOX_BG_COLOUR}"
-    BOX="${BOX}${BOX_EDGE_BL}"
-    BOX="${BOX}${BOX_EDGE_B}"
-    BOX="${BOX}${BOX_EDGE_BR}"
-    BOX="${BOX}${RESET_BG}"
-
-    # Reset background colour
-    BOX="${BOX}${RESET_ALL}"
-
-    # Print the output box
-    printf "${BOX}\n"
-
-}
-
-
-
-
-# CREATE PADDED TEXT-LINES
-#
-# Knowing the maximum width of each line "$BOX_WIDTH"
-# We can generate the correct amount of padding to
-# keep the box size consistent.
-#
-# │ textbox here 123 │
-# │ abcde            │
-# │ fgh              │
-# │ ijklmnopq        │
-#
-# The difficulty is emojis. These are double-width
-# characters.
-#
-text_lines()
-{
-    
-    TEXT_STRING=$1
-    TEXT_LINES=""
-
-    # REPLACE NEWLINES
-    #
-    # replace any '\n' (newlines) with ‰
-    STRING_ARRAY=${TEXT_STRING//'\n'/$'‰'}
-    STRING_ARRAY=${STRING_ARRAY//$'\n'/$'‰'}
-
-
-    # SPLIT INTO ARRAY
-    #
-    # split by ‰ and make an array of each line
-    IFS=$'‰' read -r -a ARRAY_OF_LINES <<< "$STRING_ARRAY"
-
-
-    # LOOP 
-    #
-    # Loop through Array to add extra padding
-    # Generate a text-line for each line in array
-    # ARRAY_OF_LINES[1] = "textline 1 🚀"
-    # ARRAY_OF_LINES[2] = "text 2"
-    # ARRAY_OF_LINES[3] = "text line three 🏠"
-    for CURRENT_LINE in "${ARRAY_OF_LINES[@]}"; do
-
-
-        # CURRENT LINE LENGTH
-        #
-        # @int 20
-        local LENGTH_OF_CURRENT_LINE=${#CURRENT_LINE}
-        # printf "LENGTH_OF_CURRENT_LINE (before emoji adjustment): $LENGTH_OF_CURRENT_LINE "
-
-
-        # EMOJIS 🏠
-        #
-        # Each emoji is 2-character width
-        # So we need to REMOVE one padding space for each line that also has an
-        # emoji.
-        #
-        # example:
-        #
-        # 123🚀
-        # line 1 has an emoji. It is four characters long.
-        # But represents FIVE because the emoji is double.
-        # It's the longest line and needs no extra padding.
-        #
-        # ABCD
-        # line 2 is FOUR characters. ABCD
-        # It requires only 1 padding character to match the
-        # longest line.
-        #
-        # X🏠
-        # line 3 is TWO characrers with an emoji. The emoji
-        # is double, so takes up 3-Characters. It requires
-        # TWO padding because of this.
-        # 
-        local LINE_EMOJI_COUNT=0
-        if [[ $CURRENT_LINE = *[![:ascii:]]* ]]; then
-        
-            # Substitute all emoji for another weird symbol
-            local WEIRD_LINE="${CURRENT_LINE//[^[:ascii:]]/∑}"
-            
-            # Normal string without weird characters.
-            local NO_EMOJI_LINE=${WEIRD_LINE//∑/}
-
-            # Length of normal string without weird characters
-            local NO_EMOJI_LINE=${#NO_EMOJI_LINE}
-            
-            # Difference between full line and line without emoji.
-            local LINE_EMOJI_COUNT=$(( $LENGTH_OF_CURRENT_LINE - $NO_EMOJI_LINE  ))
-
-            # Each emoji takes 2-characters, so double the number of characters
-            # for each emoji present.
-            local LENGTH_OF_CURRENT_LINE=$(( $LENGTH_OF_CURRENT_LINE + $LINE_EMOJI_COUNT ))
-        fi
-        # printf "(after emoji adjustment) : $LENGTH_OF_CURRENT_LINE. "
-        # printf "LINE_EMOJI_COUNT: ${LINE_EMOJI_COUNT} \n"
-
-
-
-        # RIGHT-PADDING
-        #
-        # Set the length of the right padding
-        # taking into consideration any emoji or not
-        # current longest line - minus current line text = space left
-        # 
-        local EXTRA_PR=$(( ${!TMP_LONGEST_LINE_LENGTH} - $LENGTH_OF_CURRENT_LINE ))
-        local HALF_EXTRA_PR=$(( $EXTRA_PR / 2 ))
-        local REMAINDER_EXTRA_PR=$(( $EXTRA_PR - $HALF_EXTRA_PR ))
-        # printf "LONGEST LINE: ${!TMP_LONGEST_LINE_LENGTH} \n"
-        # printf "PADDING RIGHT: ${EXTRA_PR} \n"
-
-
-        # LINE-PADDING 
-        #
-        # text░░░░░░░
-        # textline░░░
-        # abc░░░░░░░░
-        #
-        # Create the correct actual padding needed for
-        # each line to be consistent width.
-        #
-        local LINE_EXTRA_PR=$(repeat_characters " " $EXTRA_PR )
-        local HALF_EXTRA_PR=$(repeat_characters " " $HALF_EXTRA_PR )
-        local REMAINDER_EXTRA_PR=$(repeat_characters " " $REMAINDER_EXTRA_PR )
-        # printf "EXTRA PADDING RIGHT: |${LINE_EXTRA_PR}| \n"
-
-
-        # X-PADDING
-        #
-        # ▓▓▒▒text░░░░░░░▒▒▓▓
-        # ▓▓▒▒textline░░░▒▒▓▓
-        # ▓▓▒▒abc░░░░░░░░▒▒▓▓
-        #
-        # INDIRECTION NOT SETUP CORRECTLY!
-        # not using PREFIX
-        #
-        # Create the [X, Right and Lef] horizontal padding 
-        # printf "BOX_PR: |${BOX_PR}|\n"
-        # printf "BOX_PL: |${BOX_PL}|\n"
-        # printf "BOX_PX: |${BOX_PX}|\n"
-        PR_SPACES=$(repeat_characters " " "${BOX_PR}")
-        PL_SPACES=$(repeat_characters " " "${BOX_PL}")
-        PX_SPACES=$(repeat_characters " " "${BOX_PX}")
-
-        # FULL LINE
-        #
-        # │░textbox here 123 🚀░░│
-        # 
-        # Create the full text line with all padding
-        # required and edges.
-        #
-        TEXT_LINES="${TEXT_LINES}${BOX_BG_COLOUR}"
-        TEXT_LINES="${TEXT_LINES}${BOX_EDGE_L}"
-        TEXT_LINES="${TEXT_LINES}${PX_SPACES}"
-        TEXT_LINES="${TEXT_LINES}${PL_SPACES}"
-            TEXT_LINES="${TEXT_LINES}${RESET_TEXT}"
-            TEXT_LINES="${TEXT_LINES}${BOX_TEXT_COLOUR}"
-
-            if [[ "$BOX_ALIGN" == "RIGHT" ]];then
-                TEXT_LINES="${TEXT_LINES}${LINE_EXTRA_PR}"
-            fi
-
-            if [[ "$BOX_ALIGN" == "CENTER" ]];then
-                TEXT_LINES="${TEXT_LINES}${HALF_EXTRA_PR}"
-            fi
-
-            TEXT_LINES="${TEXT_LINES}${CURRENT_LINE}"
-            
-            if [[ "$BOX_ALIGN" == "LEFT" ]];then
-                TEXT_LINES="${TEXT_LINES}${LINE_EXTRA_PR}"
-            fi
-
-            if [[ "$BOX_ALIGN" == "CENTER" ]];then
-                TEXT_LINES="${TEXT_LINES}${REMAINDER_EXTRA_PR}"
-            fi
-
-            TEXT_LINES="${TEXT_LINES}${RESET_TEXT}"
-        TEXT_LINES="${TEXT_LINES}${BOX_BORDER_COLOUR}"
-        TEXT_LINES="${TEXT_LINES}${PR_SPACES}"
-        TEXT_LINES="${TEXT_LINES}${PX_SPACES}"
-        TEXT_LINES="${TEXT_LINES}${BOX_EDGE_R}"
-        TEXT_LINES="${TEXT_LINES}${RESET_BG}"
-        TEXT_LINES="${TEXT_LINES}\n"
-        
-        # printf "${TEXT_LINES}"
-    done
-
-}
-
-
-
-# Create all of the vertical padding lines
-# that are above and below the text content.
-# Sets up the variables:
-#
-# @return MULTI_PY_LINES (Y-Axis)
-# @return MULTI_PT_LINES (Top)
-# @return MULTI_PB_LINES (Bottom)
-vertical_padding()
-{
-
-    # Y-PADDING LINE 
-    #
-    # INDIRECTION NOT SETUP CORRECTLY!
-    # not using PREFIX
-    #
-    # Create the [Y, Top, Bottom] empty space for vertical padding 
-    # ░░░░░░░░░░░░░░░░
-    declare TMP_VERTICAL=$(repeat_characters " " ${!TMP_WIDTH})
-    #printf "TMP_VERTICAL: |${TMP_VERTICAL}|\n"
-
-
-    # Y-PADDING LINE + EDGES
-    #
-    # Create the vertical spacer padding line with edges
-    # │░░░░░░░░░░░░░░░░│
-    declare "${PREFIX}_VERTICAL_LINE"="${!TMP_BG_COLOUR}${!TMP_EDGE_L}${TMP_VERTICAL}${!TMP_EDGE_R}${RESET_BG} \n"
-    local TMP_VERTICAL_LINE="${PREFIX}_VERTICAL_LINE"
-    # printf "TMP_VERTICAL_LINE: ${!TMP_VERTICAL_LINE}\n"
-
-
-    # Override with HEIGHT setting
-    # Removing the number of lines too.
-    #
-    # echo "LINE_COUNT:$LINE_COUNT"
-    if ! [ -z ${BOX_H} ]; then
-        BOX_PY=$(( (${BOX_H} / 2) - $LINE_COUNT ))
-    fi
-
-    # PY-PADDING LINES (Top and Bottom)
-    #
-    # Generate the vertical padding lines
-    # │░░░░░░░░░░░░░░░░│
-    # │░░░░░░░░░░░░░░░░│
-    if ! [ ${!TMP_PY} -eq "0" ]; then
-        MULTI_PY_LINES=$(repeat_characters "${BOX_VERTICAL_LINE}" $BOX_PY )
-        MULTI_PY_LINES="$MULTI_PY_LINES\n"
-    fi
-    # printf "MULTI_PY_LINES:\n$MULTI_PY_LINES"
-
-
-    # TOP Y-PADDING LINES
-    #
-    # Generate the TOP padding lines if its set
-    # │░░░░░░░░░░░░░░░░│
-    # │░░░░░░░░░░░░░░░░│
-    if ! [ ${!TMP_PT} -eq "0" ]; then
-        MULTI_PT_LINES=$(repeat_characters "${BOX_VERTICAL_LINE}" $BOX_PT )
-        MULTI_PT_LINES="$MULTI_PT_LINES\n"
-    fi
-    # printf "\nMULTI_PT_LINES:\n$MULTI_PT_LINES"
-
-
-    # BOTTOM Y-PADDING LINES
-    #
-    # Generate the BOTTOM padding lines if its set
-    # │░░░░░░░░░░░░░░░░│
-    # │░░░░░░░░░░░░░░░░│
-    if ! [ ${!TMP_PB} -eq "0" ]; then
-        MULTI_PB_LINES=$(repeat_characters "${BOX_VERTICAL_LINE}" $BOX_PB )
-        MULTI_PB_LINES="$MULTI_PB_LINES\n"
-    fi
-    # printf "\nMULTI_PB_LINES:\n$MULTI_PB_LINES"
-    
-
-}
-
 # Redefine heights / widths incase terminal has changed size.
 define_heights
 define_widths
@@ -570,8 +226,8 @@ if [ "$#" -eq 1 ]; then
 fi
 
 if [ "$#" -ne 2 ]; then
-    printf "${TEXT_RED_500}Illegal number of parameters\n"
-    printf "${TEXT_GREEN_500}usage: ${TEXT_GRAY_200}$0 ${TEXT_SKY_500}[\"classes\"] \"String\"\n"
+    printf "${TEXT_RED_500}Illegal number of parameters"
+    printf "${TEXT_GREEN_500}usage: ${TEXT_GRAY_200}$0 ${TEXT_SKY_500}%s %s" '["classes"]' '"String"'
     exit 1
 fi
 

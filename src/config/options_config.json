@@ -1,7 +1,7 @@
 {
   "select": {
-    "clear": true,
-    "clear_before_command": true,
+    "clear": false,
+    "clear_before_command": false,
     "icon": "ICON_FADE_200",
     "hide_message": true,
     "display_help": true,
@@ -13,7 +13,7 @@
         "description": "Whoami",
         "description_style": "TEXT_GRAY_500",
         "command": "whoami",
-        "sidebar_style": "BORDER_SKY_400"
+        "bullet": "BORDER_SKY_400"
       },
       {
         "title": "${ICON_HOUSE} Machine Name",
@@ -21,7 +21,7 @@
         "description": "uname -a",
         "description_style": "TEXT_GRAY_500",
         "command": "uname -a",
-        "sidebar_style": "BORDER_EMERALD_400"
+        "bullet": "BORDER_EMERALD_400"
       },
       {
         "title": "${ICON_CMD} OS Name",
@@ -29,7 +29,7 @@
         "description": "uname",
         "description_style": "TEXT_GRAY_500",
         "command": "uname",
-        "sidebar_style": "BORDER_PINK_400"
+        "bullet": "BORDER_PINK_400"
       }
     ]
   }

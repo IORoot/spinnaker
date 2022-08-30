@@ -23,8 +23,9 @@ function substitute_source()
 
     printf "Processing: $SOURCE > $TARGET\n"
 
-    while IFS= read line; do
-            
+    # Use '-r' to ignore newlines and backslashes
+    while IFS= read -r line; do
+        
         # If it's a comment, skip it.
         if [[ "$line" =~ \#.+ ]]; then
             echo "$line" >> $TARGET
@@ -39,19 +40,25 @@ function substitute_source()
             # Remove the #!/bin/bash line
             contents="${contents//\#\!\/bin\/bash/}" 
 
+            # printf "%s" "$contents"
+
             # Comment out the source line
-            printf "#%s\n" "$line" >> $TARGET
+            # echo "# ${line}" >> $TARGET
+            printf '#%s\n' "$line" >> $TARGET
 
             # echo everything else to file
-            printf "%s" "$contents" >> $TARGET
+            # echo "${contents}" >> $TARGET
+            printf '%s\n' "$contents" >> $TARGET
 
         # echo everything else.
         else
-            printf "%s\n" "$line" >> $TARGET
+            printf '%s\n' "$line" >> $TARGET
         fi
 
     done < "$SOURCE"
 
+    chmod +x $TARGET
 }
 
 substitute_source "$@"
+
