@@ -44,7 +44,7 @@ function substitute_source()
 
             # Comment out the source line
             # echo "# ${line}" >> $TARGET
-            printf '#%s\n' "$line" >> $TARGET
+            printf '#%s\n' "$line" >> $TARGET 
 
             # echo everything else to file
             # echo "${contents}" >> $TARGET
