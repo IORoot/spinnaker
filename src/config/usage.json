@@ -1,49 +1,59 @@
 {
-    "usage": {
-        "title": { 
+    "usage": [
+        { 
             "type":     "paragraph",
+            "title":    "Title",
+            "title_s":  "TEXT_GREEN_200",
             "detail":   "This is the command.",
-            "styles":   "TEXT_GREY_500"
+            "detail_s":   "TEXT_AMBER_500 BG_AMBER_800"
         },
-        "details": { 
+        { 
             "type":     "paragraph",
+            "title":    "Details",
+            "title_s":  "TEXT_GREEN_300",
             "detail":   "Easy to configure selection list.",
-            "styles":   "TEXT_GREY_500"
+            "detail_s": "TEXT_GREEN_500"
         },
-        "options": { 
+        { 
             "type":     "table",
-            "style":    "BG_SKY_900",
-            "widths":   [ 10, 20, null ],
+            "title":    "Options",
+            "title_s":  "BG_SKY_900",
+            "style":    "TEXT_GRAY_800",
+            "background": "BG_GRAY_900",
             "rows": [
                 {
-                    "flag":  "h",
-                    "word":  "help",
-                    "info":  "Show usage message",
-                    "style": ""
+                    "flag":  "-h\n-b\n-kK\n-e\n-r",
+                    "word":  "--help\n--nope",
+                    "info":  "${TEXT_GREEN_300}Show usage message \n${TEXT_RED_900}multiline \n${BG_ORANGE_400}line${BG_GRAY_900}"
                 },
                 {
-                    "flag":  "v",
-                    "word":  "verbose",
-                    "info":  "Show verbose output",
-                    "style": ""
+                    "flag":  "-v\n-vv",
+                    "word":  "--verbose",
+                    "info":  "Show verbose output"
                 }
             ]
 
         },
-        "explanation": { 
+        { 
             "type":     "paragraph",
-            "detail":   "Example help usage:\n Use the -h for help.",
-            "styles":   "TEXT_GREY_500"
+            "title":    "Explanation",
+            "title_s":  "TEXT_GREEN_400",
+            "detail":   "Example help usage:\nUse the -h for help.",
+            "detail_s": "TEXT_RED_500"
         },
-        "example": { 
+        { 
             "type":     "paragraph",
-            "detail":   "Example help usage:\n Use the -h for help.",
-            "styles":   "TEXT_GREY_500"
+            "title":    "Example",
+            "title_s":  "TEXT_GREEN_500",
+            "detail":   "Example help usage:\nUse the -h for help.",
+            "detail_s": "TEXT_BLUE_500"
         },
-        "footer": { 
+        { 
             "type":     "paragraph",
-            "detail":   "Written by Andy Pearson.",
-            "styles":   "TEXT_GREY_500"
+            "title":    "Footer",
+            "title_s":  "TEXT_GREEN_600",
+            "detail":   "Written by ${BG_RED_800}Andy Pearson${RESET_BG}. ${ICON_ROCKET}",
+            "detail_s": "TEXT_YELLOW_500"
         }
-    }
+    ]
 }
