@@ -35,7 +35,7 @@ function substitute_source()
         elif [[ "$line" =~ [[:space:]]*(\.|source)\s+.+ ]]; then
             file="$(echo $line | cut -d' ' -f2)"
             echo "Replacing: $file"
-            contents=$(eval "cat ${file}")
+            contents=$(eval "cat ${file}" 2>/dev/null)
 
             # Remove the #!/bin/bash line
             contents="${contents//\#\!\/bin\/bash/}" 

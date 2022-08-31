@@ -50,6 +50,38 @@ source $SPINNAKER_TOOLS_FOLDER/utils/line_count.sh
 
 # ┌─────────────────────────────────────┐
 # │                                     │
+# │           Render Content            │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/usage/render_content.sh
+
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │            Render Header            │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/usage/render_header.sh
+
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │            Render Footer            │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/usage/render_footer.sh
+
+
+# ┌─────────────────────────────────────┐
+# │                                     │
+# │               Pad Row               │
+# │                                     │
+# └─────────────────────────────────────┘
+source $SPINNAKER_TOOLS_FOLDER/usage/pad_row.sh
+
+
+# ┌─────────────────────────────────────┐
+# │                                     │
 # │            Main function            │
 # │                                     │
 # └─────────────────────────────────────┘
@@ -204,201 +236,6 @@ table()
 }
 
 
-render_content()
-{
-
-    TABLE_SEPARATOR="${ICON_FV}"
-
-    FLAG_LINE_COUNT=$(line_count "${TABLE_FLAG}")
-    WORD_LINE_COUNT=$(line_count "${TABLE_WORD}")
-    INFO_LINE_COUNT=$(line_count "${TABLE_INFO}")
-
-    # Find greatest number of three columns
-    if [ $FLAG_LINE_COUNT -gt $WORD_LINE_COUNT ] && [ $FLAG_LINE_COUNT -gt $INFO_LINE_COUNT ]; then
-        LONGEST_COUNT=$FLAG_LINE_COUNT
-    elif [ $WORD_LINE_COUNT -gt $FLAG_LINE_COUNT ] && [ $WORD_LINE_COUNT -gt $INFO_LINE_COUNT ]; then
-        LONGEST_COUNT=$WORD_LINE_COUNT
-    else
-        LONGEST_COUNT=$INFO_LINE_COUNT
-    fi
-
-    # Pad each line with newlines to match column with most lines.
-    FLAG_PAD=$(( $LONGEST_COUNT - $FLAG_LINE_COUNT ))
-    WORD_PAD=$(( $LONGEST_COUNT - $WORD_LINE_COUNT ))
-    INFO_PAD=$(( $LONGEST_COUNT - $INFO_LINE_COUNT ))
-
-    # Add pads to each row line
-    TABLE_FLAG=$(pad_row "$TABLE_FLAG" $FLAG_PAD)
-    TABLE_WORD=$(pad_row "$TABLE_WORD" $WORD_PAD)
-    TABLE_INFO=$(pad_row "$TABLE_INFO" $INFO_PAD)
-
-    # Create arrays by newline
-    # split by ‰ and make an array of each line
-    TABLE_FLAG=${TABLE_FLAG//'\n'/$'‰'}
-    TABLE_FLAG=${TABLE_FLAG//$'\n'/$'‰'}
-    IFS=$'‰' read -r -a TABLE_FLAG <<< "$TABLE_FLAG"
-
-    TABLE_WORD=${TABLE_WORD//'\n'/$'‰'}
-    TABLE_WORD=${TABLE_WORD//$'\n'/$'‰'}
-    IFS=$'‰' read -r -a TABLE_WORD <<< "$TABLE_WORD"
-
-    TABLE_INFO=${TABLE_INFO//'\n'/$'‰'}
-    TABLE_INFO=${TABLE_INFO//$'\n'/$'‰'}
-    IFS=$'‰' read -r -a TABLE_INFO <<< "$TABLE_INFO"
-
-    for (( LINE_LOOP=0; LINE_LOOP<${LONGEST_COUNT}; LINE_LOOP++ ))
-    do 
-
-        # LENGTH_WITHOUT_CONTROL_CHARACTERS=$(echo ${TABLE_INFO[$LINE_LOOP]})
-        LENGTH_WITHOUT_CONTROL_CHARACTERS=$(echo -e ${TABLE_INFO[$LINE_LOOP]} | sed $'s/\e\\[[0-9;:]*[a-zA-Z]//g');
-
-        # echo ${#TABLE_INFO[$LINE_LOOP]}
-        # echo ${#LENGTH_WITHOUT_CONTROL_CHARACTERS}
-
-        if [[ ${#TABLE_INFO[$LINE_LOOP]} == ${#LENGTH_WITHOUT_CONTROL_CHARACTERS} ]]; then
-            INFO_PAD_LENGTH=$(( ${TABLE_WIDTH} - ${TAB_WIDTH} - 1 - ${FLAG_WIDTH} - 1 - ${WORD_WIDTH} - ${#TABLE_INFO[$LINE_LOOP]} - 3))
-        else
-            INFO_PAD_LENGTH=$(( ${TABLE_WIDTH} - ${TAB_WIDTH} - 1 - ${FLAG_WIDTH} - 1 - ${WORD_WIDTH} - ${#LENGTH_WITHOUT_CONTROL_CHARACTERS} - 4))
-        fi
-
-        printf '\t'
-        printf "${TABLE_BACKGROUND_BG_COLOUR}"
-        printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-        printf '%1s'   "${TABLE_SEPARATOR}"
-        printf "${RESET_ALL}"
-
-        printf "${TABLE_BACKGROUND_BG_COLOUR}"
-        printf '%-10b' " ${TABLE_FLAG[$LINE_LOOP]}"
-
-        printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-        printf '%1s'   "${TABLE_SEPARATOR}"
-        printf "${RESET_ALL}"
-
-        printf "${TABLE_BACKGROUND_BG_COLOUR}"
-        printf '%-30b' " ${TABLE_WORD[$LINE_LOOP]}"
-
-        printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-        printf '%1s'   "${TABLE_SEPARATOR}"
-        printf "${RESET_ALL}"
-
-        printf "${TABLE_BACKGROUND_BG_COLOUR}"
-        printf '%b'    " ${TABLE_INFO[$LINE_LOOP]}"
-
-        printf "%${INFO_PAD_LENGTH}b" " "
-
-        printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-        printf '%1s'   "${TABLE_SEPARATOR}"
-        printf "${RESET_ALL}"
-
-        printf '\n'
-
-    done
-
-}
-
-
-pad_row()
-{
-    LINE=$1
-    ROWS=$2
-
-    # Add newlines to columns
-    for ((i=1; i<=$ROWS; i++))
-    do
-        LINE+=' \n'
-    done
-
-    echo $LINE
-}
-
-
-
-render_header()
-{
-
-    
-    # top BAR
-    HEADER_TOP+="\t"
-    HEADER_TOP+="${TABLE_BACKGROUND_BG_COLOUR}"
-    HEADER_TOP+="${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-    HEADER_TOP+="${ICON_0FF0}"
-    HEADER_TOP+=$(repeat_characters "${ICON_FH}" ${FLAG_WIDTH} )
-    HEADER_TOP+="${ICON_0FFF}"
-    HEADER_TOP+=$(repeat_characters "${ICON_FH}" ${WORD_WIDTH} )
-    HEADER_TOP+="${ICON_0FFF}"
-    HEADER_TOP+=$(repeat_characters "${ICON_FH}" $(( ${TABLE_WIDTH} - ${TAB_WIDTH} - 1 - ${FLAG_WIDTH} - 1 - ${WORD_WIDTH} - 1 - 1 )) )
-    HEADER_TOP+="${ICON_00FF}"
-    HEADER_TOP+="${RESET_ALL}"
-
-    printf "${HEADER_TOP}\n"
-
-    # header separator line
-    TABLE_SEPARATOR="${ICON_FV}"
-    DESCRIPTION_WIDTH=$(( ${TABLE_WIDTH} - ${TAB_WIDTH} - 1 - ${FLAG_WIDTH} - 1 - ${WORD_WIDTH} - 1  - 1 ))
-    printf "\t"
-    printf "${TABLE_BACKGROUND_BG_COLOUR}"
-    printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-    printf "%1s" "${TABLE_SEPARATOR}"
-    printf "${RESET_ALL}"
-
-    printf "${TABLE_BACKGROUND_BG_COLOUR}"
-    printf "%-${FLAG_WIDTH}s" "-Flag"
-
-    printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-    printf "%1s" "${TABLE_SEPARATOR}"
-    printf "${RESET_ALL}"
-
-    printf "${TABLE_BACKGROUND_BG_COLOUR}"
-    printf "%-${WORD_WIDTH}s" "--Word"
-
-    printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-    printf "%1s" "${TABLE_SEPARATOR}"
-    printf "${RESET_ALL}"
-
-    printf "${TABLE_BACKGROUND_BG_COLOUR}"
-    printf "%-${DESCRIPTION_WIDTH}s" "Description"
-
-    printf "${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-    printf "%1s" "${TABLE_SEPARATOR}"
-    printf "${RESET_ALL}"
-    printf "\n"
-
-    # bottom BAR
-    HEADER_BOTTOM+="\t"
-    HEADER_BOTTOM+="${TABLE_BACKGROUND_BG_COLOUR}"
-    HEADER_BOTTOM+="${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-    HEADER_BOTTOM+="${ICON_FFF0}"
-    HEADER_BOTTOM+=$(repeat_characters "${ICON_FH}" ${FLAG_WIDTH} )
-    HEADER_BOTTOM+="${ICON_FFFF}"
-    HEADER_BOTTOM+=$(repeat_characters "${ICON_FH}" ${WORD_WIDTH} )
-    HEADER_BOTTOM+="${ICON_FFFF}"
-    HEADER_BOTTOM+=$(repeat_characters "${ICON_FH}" $(( ${TABLE_WIDTH} - ${TAB_WIDTH} - 1 - ${FLAG_WIDTH} - 1 - ${WORD_WIDTH} - 1 - 1 )) )
-    HEADER_BOTTOM+="${ICON_F0FF}"
-    HEADER_BOTTOM+="${RESET_ALL}"
-
-    printf "${HEADER_BOTTOM}\n"
-
-}
-
-
-
-render_footer()
-{
-    # bottom BAR
-    FOOTER_BOTTOM+="\t"
-    FOOTER_BOTTOM+="${TABLE_BACKGROUND_BG_COLOUR}"
-    FOOTER_BOTTOM+="${TABLE_STYLE_TEXT_COLOUR}${TABLE_STYLE_BG_COLOUR}"
-    FOOTER_BOTTOM+="${ICON_FF00}"
-    FOOTER_BOTTOM+=$(repeat_characters "${ICON_FH}" ${FLAG_WIDTH} )
-    FOOTER_BOTTOM+="${ICON_FF0F}"
-    FOOTER_BOTTOM+=$(repeat_characters "${ICON_FH}" ${WORD_WIDTH} )
-    FOOTER_BOTTOM+="${ICON_FF0F}"
-    FOOTER_BOTTOM+=$(repeat_characters "${ICON_FH}" $(( ${TABLE_WIDTH} - ${TAB_WIDTH} - 1 - ${FLAG_WIDTH} - 1 - ${WORD_WIDTH} - 1 - 1 )) )
-    FOOTER_BOTTOM+="${ICON_F00F}"
-    FOOTER_BOTTOM+="${RESET_ALL}"
-
-    printf "${FOOTER_BOTTOM}\n"
-}
 
 
 

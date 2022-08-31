@@ -43,13 +43,6 @@
         },
         { 
             "type":     "paragraph",
-            "title":    "Example",
-            "title_s":  "TEXT_GREEN_500",
-            "detail":   "Example help usage:\nUse the -h for help.",
-            "detail_s": "TEXT_BLUE_500"
-        },
-        { 
-            "type":     "paragraph",
             "title":    "Footer",
             "title_s":  "TEXT_GREEN_600",
             "detail":   "Written by ${BG_RED_800}Andy Pearson${RESET_BG}. ${ICON_ROCKET}",
