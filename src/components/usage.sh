@@ -236,9 +236,6 @@ table()
 }
 
 
-
-
-
 # Check is file is being passed
 if [ "$#" -ne 1 ]; then
     usage

@@ -4,14 +4,14 @@
             "type":     "paragraph",
             "title":    "Title",
             "title_s":  "TEXT_GREEN_200",
-            "detail":   "This is the command.",
-            "detail_s":   "TEXT_AMBER_500 BG_AMBER_800"
+            "detail":   "This is the usage command.",
+            "detail_s": "TEXT_AMBER_500 BG_AMBER_800"
         },
         { 
             "type":     "paragraph",
             "title":    "Details",
             "title_s":  "TEXT_GREEN_300",
-            "detail":   "Easy to configure selection list.",
+            "detail":   "Easy to configure with a simple JSON file. You can add multiple text sections or table sections.",
             "detail_s": "TEXT_GREEN_500"
         },
         { 
@@ -22,9 +22,9 @@
             "background": "BG_GRAY_900",
             "rows": [
                 {
-                    "flag":  "-h\n-b\n-kK\n-e\n-r",
+                    "flag":  "-h\n-e\n-l\n-p",
                     "word":  "--help\n--nope",
-                    "info":  "${TEXT_GREEN_300}Show usage message \n${TEXT_RED_900}multiline \n${BG_ORANGE_400}line${BG_GRAY_900}"
+                    "info":  "${TEXT_GREEN_300}The table section defines 3 columns. \n${TEXT_SKY_400}The 'flag', 'word' and 'description' columns. The description is highly configurable. \n${BG_ORANGE_900}You can also use any TEXT or BG colour on the text. The table background and lines are also configuraable with colour.${BG_GRAY_900}"
                 },
                 {
                     "flag":  "-v\n-vv",
@@ -38,7 +38,7 @@
             "type":     "paragraph",
             "title":    "Explanation",
             "title_s":  "TEXT_GREEN_400",
-            "detail":   "Example help usage:\nUse the -h for help.",
+            "detail":   "See the corresponding JSON file to see how this is configured.",
             "detail_s": "TEXT_RED_500"
         },
         { 

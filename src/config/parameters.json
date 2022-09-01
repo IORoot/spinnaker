@@ -1,0 +1,11 @@
+{
+    "parameters": [
+        {
+            "type":     "flag",
+            "flag":     "v",
+            "word":     "verbose",
+            "vital":    "optional",
+            "variable": "VERBOSE"
+        }
+    ]
+}
