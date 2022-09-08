@@ -4,8 +4,23 @@
             "type":     "flag",
             "flag":     "v",
             "word":     "verbose",
-            "vital":    "optional",
-            "variable": "VERBOSE"
+            "command":  "export declare VERBOSE=true;"
+        },
+        {
+            "type":     "flag",
+            "flag":     "h",
+            "word":     "help",
+            "command":  "HELP=true"
+        },
+        {
+            "type":     "file",
+            "flag":     "f",
+            "word":     "file",
+            "command":  "export FILE=true"
+        },
+        {
+            "type":     "stdin",
+            "command":  "STDIN=true"
         }
     ]
 }

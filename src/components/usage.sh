@@ -85,7 +85,7 @@ source $SPINNAKER_TOOLS_FOLDER/usage/pad_row.sh
 # │            Main function            │
 # │                                     │
 # └─────────────────────────────────────┘
-usage()
+function usage()
 {
     # Take first arg as Config file
     CONFIG_FILE=$1
@@ -113,7 +113,7 @@ usage()
 }
 
 
-paragraph()
+function paragraph()
 {
     INDEX=$1
 
@@ -157,7 +157,7 @@ paragraph()
 
 
 
-table()
+function table()
 {
     INDEX=$1
 
