@@ -1,0 +1,20 @@
+{
+    "progresslist": {
+        "command_output": "off",
+        "spinner": "SPIN_DIGI",
+        "tasks": [
+            {
+                "title":     "Task 1 - Whoami",
+                "command":  "whoami"
+            },
+            {
+                "title":     "Task 2 - Sleep",
+                "command":  "sleep 3 && exit 2"
+            },
+            {
+                "title":     "Task 3 - Uname",
+                "command":  "uname -a"
+            }
+        ]
+    }
+}

@@ -11,7 +11,7 @@ gyro() {
 
     _TASK_OUTPUT=""
     local delay=0.05
-    local list=( ${SPIN_BALL} )
+    local list=( ${SPIN_LEVEL} )
     local i=$_SPINNER_POS
     local tempfile
     tempfile=$(mktemp)

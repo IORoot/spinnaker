@@ -49,7 +49,7 @@ spinner () {
   # The : means NULL. "While NULL"
   while :; do
 
-    trap cleanup INT QUIT TERM
+    # trap cleanup INT QUIT TERM
     
     # Hide the cursor
     tput civis

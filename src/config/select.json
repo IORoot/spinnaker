@@ -30,6 +30,14 @@
         "description_style": "TEXT_GRAY_500",
         "command": "uname",
         "bullet": "BORDER_PINK_400"
+      },
+      {
+        "title": "${ICON_CMD} OS Name",
+        "title_style": "TEXT_YELLOW_300",
+        "description": "uname",
+        "description_style": "TEXT_GRAY_500",
+        "command": "ls",
+        "bullet": "BORDER_PINK_400"
       }
     ]
   }
