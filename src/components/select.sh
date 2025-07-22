@@ -133,7 +133,7 @@ function options(){
     if $DISPLAY_HELP; then
         printf "$TEXT_STONE_500 $ICON_ARROW_N $TEXT_STONE_600 up $ICON_CIRCLE $TEXT_STONE_500 $ICON_ARROW_S $TEXT_STONE_600 down $ICON_CIRCLE $TEXT_STONE_500 enter $TEXT_STONE_600 choose $RESET_TEXT\n\n";
     fi
-
+    
     select_option "${SELECT_ARRAY[@]}"
     choice=$?
     # echo "Choosen index = $choice"

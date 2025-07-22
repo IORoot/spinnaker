@@ -24,7 +24,7 @@
                 {
                     "flag":  "-h\n-e\n-l\n-p",
                     "word":  "--help\n--nope",
-                    "info":  "${TEXT_GREEN_300}The table section defines 3 columns. \n${TEXT_SKY_400}The 'flag', 'word' and 'description' columns. The description is highly configurable. \n${BG_ORANGE_900}You can also use any TEXT or BG colour on the text. The table background and lines are also configuraable with colour.${BG_GRAY_900}"
+                    "info":  "${TEXT_GREEN_300}The table section defines 3 columns. \n${TEXT_SKY_400}The 'flag', 'word' and 'description' columns. The description is highly configurable. \n${BG_ORANGE_900}You can also use any TEXT or BG colour on the text.\n The table background and lines are also configuraable with colour.${BG_GRAY_900}"
                 },
                 {
                     "flag":  "-v\n-vv",
