@@ -1,3 +1,5 @@
+![header](https://raw.githubusercontent.com/IORoot/HouseQuests_wiki/refs/heads/master/header.jpg)
+
 # Things to add
 
 ## Inspired by: 
